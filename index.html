@@ -1,173 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Input Jajan</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-body{
-font-family: 'Segoe UI', Arial, sans-serif;
-margin:0;
-background:linear-gradient(135deg,#0f172a,#1e3a8a);
-color:#0f172a;
-}
-
-.container{
-max-width:420px;
-margin:auto;
-padding:15px;
-}
-
-.card{
-background:white;
-border-radius:16px;
-padding:20px;
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
-}
-
-h2{
-text-align:center;
-color:#1e3a8a;
-font-weight:800;
-}
-
-label{
-font-weight:700;
-display:block;
-margin-top:10px;
-}
-
-select, input{
-width:100%;
-padding:10px;
-margin-top:5px;
-border-radius:8px;
-border:1px solid #ccc;
-font-size:16px;
-}
-
-.row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:10px;
-}
-
-.item{
-font-weight:600;
-}
-
-input{
-width:80px;
-text-align:center;
-}
-
-button{
-width:100%;
-padding:15px;
-margin-top:20px;
-background:#1e3a8a;
-color:white;
-border:none;
-border-radius:10px;
-font-size:18px;
-font-weight:700;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-<div class="card">
-
-<h2>Input Jajan</h2>
-
-<label>Jenis</label>
-<select id="jenis">
-<option value="Masuk">Jajan Masuk</option>
-<option value="Sisa">Jajan Sisa</option>
-</select>
-
-<label>Tempat</label>
-<select id="tempat">
-<option>Ikhwan</option>
-<option>Akhwat</option>
-</select>
-
-<div class="row"><span class="item">Tahu Batagor</span><input type="number" id="tahu_batagor"></div>
-<div class="row"><span class="item">Cilok</span><input type="number" id="cilok"></div>
-<div class="row"><span class="item">Cimol Cireng</span><input type="number" id="cimol_cireng"></div>
-<div class="row"><span class="item">Kripik Kolek</span><input type="number" id="kripik_kolek"></div>
-<div class="row"><span class="item">Piscok Molen</span><input type="number" id="piscok_molen"></div>
-<div class="row"><span class="item">Dimsum Maklor Moci</span><input type="number" id="dimsum_maklor_moci"></div>
-<div class="row"><span class="item">Kebab</span><input type="number" id="kebab"></div>
-<div class="row"><span class="item">Sosis Roti Gurita</span><input type="number" id="sosis_roti_gurita"></div>
-
-<button id="tombol" onclick="kirim()">Simpan</button>
-
-</div>
-</div>
-
 <script>
-
 async function kirim(){
 
-var tombol = document.getElementById("tombol");
+  const tombol = document.getElementById("tombol");
 
-if(tombol.disabled) return;
+  if(tombol.disabled) return;
 
-tombol.innerText = "Mengirim...";
-tombol.disabled = true;
+  tombol.disabled = true;
+  tombol.innerText = "Mengirim...";
 
-var tempat = document.getElementById("tempat").value;
-var jenis = document.getElementById("jenis").value;
+  const tempat = document.getElementById("tempat").value;
+  const jenis = document.getElementById("jenis").value;
 
-let items = [
-  { barang: "Tahu Batagor", jumlah: document.getElementById("tahu_batagor").value },
-  { barang: "Cilok", jumlah: document.getElementById("cilok").value },
-  { barang: "Cimol Cireng", jumlah: document.getElementById("cimol_cireng").value },
-  { barang: "Kripik Kolek", jumlah: document.getElementById("kripik_kolek").value },
-  { barang: "Piscok Molen", jumlah: document.getElementById("piscok_molen").value },
-  { barang: "Dimsum Maklor Moci", jumlah: document.getElementById("dimsum_maklor_moci").value },
-  { barang: "Kebab", jumlah: document.getElementById("kebab").value },
-  { barang: "Sosis Roti Gurita", jumlah: document.getElementById("sosis_roti_gurita").value }
-];
+  const items = [
+    {barang: "Tahu Batagor", jumlah: document.getElementById("tahu_batagor").value},
+    {barang: "Cilok", jumlah: document.getElementById("cilok").value},
+    {barang: "Cimol Cireng", jumlah: document.getElementById("cimol_cireng").value},
+    {barang: "Kripik Kolek", jumlah: document.getElementById("kripik_kolek").value},
+    {barang: "Piscok Molen", jumlah: document.getElementById("piscok_molen").value},
+    {barang: "Dimsum Maklor Moci", jumlah: document.getElementById("dimsum_maklor_moci").value},
+    {barang: "Kebab", jumlah: document.getElementById("kebab").value},
+    {barang: "Sosis Roti Gurita", jumlah: document.getElementById("sosis_roti_gurita").value}
+  ];
 
-await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
-  method: "POST",
-  mode: "no-cors",
-  body: JSON.stringify({
-    waktu: new Date().toISOString(),
-    tempat: tempat,
-    jenis: jenis,
-    items: items
-  })
-});
+  try{
 
-tombol.innerText = "Simpan";
-tombol.disabled = false;
+    const res = await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        waktu: new Date().toLocaleString(),
+        tempat: tempat,
+        jenis: jenis,
+        items: items
+      })
+    });
 
-kosongkan();
+    const text = await res.text();
 
-alert("Data berhasil tersimpan");
+    console.log(text);
+
+    if(text === "OK"){
+      alert("✅ Data berhasil dikirim!");
+    } else {
+      alert("⚠️ Server merespon tapi tidak OK");
+    }
+
+  }catch(err){
+    console.log(err);
+    alert("❌ Gagal kirim data! Cek koneksi atau script");
+  }
+
+  tombol.disabled = false;
+  tombol.innerText = "Simpan";
+
+  kosongkan();
 
 }
-
-function kosongkan(){
-
-document.getElementById("tahu_batagor").value="";
-document.getElementById("cilok").value="";
-document.getElementById("cimol_cireng").value="";
-document.getElementById("kripik_kolek").value="";
-document.getElementById("piscok_molen").value="";
-document.getElementById("dimsum_maklor_moci").value="";
-document.getElementById("kebab").value="";
-document.getElementById("sosis_roti_gurita").value="";
-
-}
-
 </script>
-
-</body>
-</html>
