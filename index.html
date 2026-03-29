@@ -1,61 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Input Jajan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
+<style>
+body{
+font-family: 'Segoe UI', Arial, sans-serif;
+color:#0f172a;
+margin:0;
+background:linear-gradient(135deg,#0f172a,#1e3a8a);
+}
+
+.container{
+max-width:420px;
+margin:auto;
+padding:15px;
+}
+
+.card{
+background:white;
+border-radius:16px;
+padding:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+h2{
+text-align:center;
+margin-bottom:15px;
+color:#1e3a8a;
+font-weight:800;
+letter-spacing:0.5px;
+}
+
+label{
+font-weight:700;
+font-size:13px;
+color:#334155;
+margin-top:8px;
+display:block;
+}
+
+select{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #cbd5f5;
+margin-bottom:15px;
+font-size:16px;
+font-weight:600;
+color:#1e293b;
+background:#f8fafc;
+}
+
+.table{
+margin-top:10px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 0;
+border-bottom:1px solid #eee;
+}
+
+.row:last-child{
+border:none;
+}
+
+.item{
+font-size:15px;
+color:#0f172a;
+font-weight:600;
+}
+
+input{
+width:80px;
+padding:8px;
+border-radius:10px;
+border:1px solid #cbd5f5;
+text-align:center;
+font-size:16px;
+font-weight:600;
+color:#1e293b;
+background:#f8fafc;
+}
+
+button{
+width:100%;
+padding:15px;
+font-size:18px;
+background:linear-gradient(135deg,#1e3a8a,#3b82f6);
+color:white;
+border:none;
+border-radius:12px;
+margin-top:20px;
+font-weight:700;
+letter-spacing:0.5px;
+transition:0.2s;
+box-shadow:0 6px 15px rgba(30,58,138,0.3);
+}
+
+button:active{
+transform:scale(0.97);
+}
+
+button:disabled{
+background:gray;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="card">
+
+<h2>Input Jajan</h2>
+
+<label>Jenis</label>
+<select id="jenis">
+<option value="Masuk">Jajan Masuk</option>
+<option value="Sisa">Jajan Sisa</option>
+</select>
+
+<label>Tempat</label>
+<select id="tempat">
+<option>Ikhwan</option>
+<option>Akhwat</option>
+</select>
+
+<div class="table">
+
+<div class="row">
+<span class="item">Tahu Batagor</span>
+<input type="number" id="tahu_batagor">
+</div>
+
+<div class="row">
+<span class="item">Cilok</span>
+<input type="number" id="cilok">
+</div>
+
+<div class="row">
+<span class="item">Cimol Cireng</span>
+<input type="number" id="cimol_cireng">
+</div>
+
+<div class="row">
+<span class="item">Kripik Kolek</span>
+<input type="number" id="kripik_kolek">
+</div>
+
+<div class="row">
+<span class="item">Piscok Molen</span>
+<input type="number" id="piscok_molen">
+</div>
+
+<div class="row">
+<span class="item">Dimsum Maklor Moci</span>
+<input type="number" id="dimsum_maklor_moci">
+</div>
+
+<div class="row">
+<span class="item">Kebab</span>
+<input type="number" id="kebab">
+</div>
+
+<div class="row">
+<span class="item">Sosis Roti Gurita</span>
+<input type="number" id="sosis_roti_gurita">
+</div>
+
+</div>
+
+<button id="tombol" onclick="kirim()">Simpan</button>
+
+</div>
+</div>
+
 <script>
+
 async function kirim(){
 
-  const tombol = document.getElementById("tombol");
+var tombol=document.getElementById("tombol");
 
-  if(tombol.disabled) return;
+if(tombol.disabled) return; // anti double klik
 
-  tombol.disabled = true;
-  tombol.innerText = "Mengirim...";
 
-  const tempat = document.getElementById("tempat").value;
-  const jenis = document.getElementById("jenis").value;
+tombol.innerText="Mengirim...";
+tombol.disabled=true;
 
-  const items = [
-    {barang: "Tahu Batagor", jumlah: document.getElementById("tahu_batagor").value},
-    {barang: "Cilok", jumlah: document.getElementById("cilok").value},
-    {barang: "Cimol Cireng", jumlah: document.getElementById("cimol_cireng").value},
-    {barang: "Kripik Kolek", jumlah: document.getElementById("kripik_kolek").value},
-    {barang: "Piscok Molen", jumlah: document.getElementById("piscok_molen").value},
-    {barang: "Dimsum Maklor Moci", jumlah: document.getElementById("dimsum_maklor_moci").value},
-    {barang: "Kebab", jumlah: document.getElementById("kebab").value},
-    {barang: "Sosis Roti Gurita", jumlah: document.getElementById("sosis_roti_gurita").value}
-  ];
+var tempat=document.getElementById("tempat").value;
+var jenis=document.getElementById("jenis").value;
 
-  try{
+await kirimBarang("Tahu Batagor", document.getElementById("tahu_batagor").value, tempat, jenis);
+await kirimBarang("Cilok", document.getElementById("cilok").value, tempat, jenis);
+await kirimBarang("Cimol Cireng", document.getElementById("cimol_cireng").value, tempat, jenis);
+await kirimBarang("Kripik Kolek", document.getElementById("kripik_kolek").value, tempat, jenis);
+await kirimBarang("Piscok Molen", document.getElementById("piscok_molen").value, tempat, jenis);
+await kirimBarang("Dimsum Maklor Moci", document.getElementById("dimsum_maklor_moci").value, tempat, jenis);
+await kirimBarang("Kebab", document.getElementById("kebab").value, tempat, jenis);
+await kirimBarang("Sosis Roti Gurita", document.getElementById("sosis_roti_gurita").value, tempat, jenis);
 
-    const res = await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        waktu: new Date().toLocaleString(),
-        tempat: tempat,
-        jenis: jenis,
-        items: items
-      })
-    });
 
-    const text = await res.text();
+tombol.innerText="Simpan";
+tombol.disabled=false;
 
-    console.log(text);
+kosongkan();
 
-    if(text === "OK"){
-      alert("✅ Data berhasil dikirim!");
-    } else {
-      alert("⚠️ Server merespon tapi tidak OK");
-    }
-
-  }catch(err){
-    console.log(err);
-    alert("❌ Gagal kirim data! Cek koneksi atau script");
-  }
-
-  tombol.disabled = false;
-  tombol.innerText = "Simpan";
-
-  kosongkan();
+alert("Data berhasil tersimpan");
 
 }
+
+async function kirimBarang(barang,jumlah,tempat,jenis){
+
+if(jumlah=="" || jumlah==0)return;
+
+let data = {
+  waktu: new Date().toISOString(),
+  tempat: tempat,
+  barang: barang,
+  jumlah: jumlah,
+  jenis: jenis
+};
+
+// 1. simpan ke firebase
+await db.ref("jajan").push(data);
+
+// 2. kirim ke spreadsheet
+fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+  method:"POST",
+  body: JSON.stringify(data)
+});
+
+}
+
+function kosongkan(){
+
+document.getElementById("tahu_batagor").value="";
+document.getElementById("cilok").value="";
+document.getElementById("cimol_cireng").value="";
+document.getElementById("kripik_kolek").value="";
+document.getElementById("piscok_molen").value="";
+document.getElementById("dimsum_maklor_moci").value="";
+document.getElementById("kebab").value="";
+document.getElementById("sosis_roti_gurita").value="";
+
+}
+
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
+  authDomain: "cilok-86ced.firebaseapp.com",
+  databaseURL: "https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "cilok-86ced",
+  storageBucket: "cilok-86ced.firebasestorage.app",
+  messagingSenderId: "1038629771281",
+  appId: "1:1038629771281:web:45d56ba73acaf6613a79b0"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+</script>
+</body>
+</html>
