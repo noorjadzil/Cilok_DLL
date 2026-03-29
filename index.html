@@ -220,14 +220,12 @@ async function kirimBarang(barang,jumlah,tempat,jenis){
 
 if(jumlah=="" || jumlah==0)return;
 
-await fetch("https://script.google.com/macros/s/AKfycbxj_nRBkdTPoASNFe1zCRZAYDbM8ihnO9Hnjp0-ewsma3jZk42I-Z7XzpSfDRaUZmu9/exec",{
-method:"POST",
-body: JSON.stringify({
-tempat:tempat,
-barang:barang,
-jumlah:jumlah,
-jenis:jenis
-})
+await db.ref("jajan").push({
+  waktu: new Date().toISOString(),
+  tempat: tempat,
+  barang: barang,
+  jumlah: jumlah,
+  jenis: jenis
 });
 
 }
@@ -246,6 +244,22 @@ document.getElementById("sosis_roti_gurita").value="";
 }
 
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
+  authDomain: "cilok-86ced.firebaseapp.com",
+  databaseURL: "https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "cilok-86ced",
+  storageBucket: "cilok-86ced.firebasestorage.app",
+  messagingSenderId: "1038629771281",
+  appId: "1:1038629771281:web:45d56ba73acaf6613a79b0"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+</script>
 </body>
 </html>
