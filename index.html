@@ -220,12 +220,21 @@ async function kirimBarang(barang,jumlah,tempat,jenis){
 
 if(jumlah=="" || jumlah==0)return;
 
-await db.ref("jajan").push({
+let data = {
   waktu: new Date().toISOString(),
   tempat: tempat,
   barang: barang,
   jumlah: jumlah,
   jenis: jenis
+};
+
+// 1. simpan ke firebase
+await db.ref("jajan").push(data);
+
+// 2. kirim ke spreadsheet
+fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+  method:"POST",
+  body: JSON.stringify(data)
 });
 
 }
