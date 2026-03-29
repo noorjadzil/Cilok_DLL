@@ -196,7 +196,7 @@ tombol.disabled = true;
 var tempat = document.getElementById("tempat").value;
 var jenis = document.getElementById("jenis").value;
 
-let data = [
+let items = [
   { barang: "Tahu Batagor", jumlah: document.getElementById("tahu_batagor").value },
   { barang: "Cilok", jumlah: document.getElementById("cilok").value },
   { barang: "Cimol Cireng", jumlah: document.getElementById("cimol_cireng").value },
@@ -207,18 +207,14 @@ let data = [
   { barang: "Sosis Roti Gurita", jumlah: document.getElementById("sosis_roti_gurita").value }
 ];
 
-// kirim sekali saja
 await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
   method: "POST",
   mode: "no-cors",
-  headers: {
-    "Content-Type": "application/json"
-  },
   body: JSON.stringify({
     waktu: new Date().toISOString(),
     tempat: tempat,
     jenis: jenis,
-    items: data
+    items: items
   })
 });
 
