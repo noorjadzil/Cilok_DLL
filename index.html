@@ -3,13 +3,13 @@
 <head>
 <title>Input Jajan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="manifest.json">
+
 <style>
 body{
 font-family: 'Segoe UI', Arial, sans-serif;
-color:#0f172a;
 margin:0;
 background:linear-gradient(135deg,#0f172a,#1e3a8a);
+color:#0f172a;
 }
 
 .container{
@@ -27,91 +27,53 @@ box-shadow:0 8px 20px rgba(0,0,0,0.15);
 
 h2{
 text-align:center;
-margin-bottom:15px;
 color:#1e3a8a;
 font-weight:800;
-letter-spacing:0.5px;
 }
 
 label{
 font-weight:700;
-font-size:13px;
-color:#334155;
-margin-top:8px;
 display:block;
-}
-
-select{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:1px solid #cbd5f5;
-margin-bottom:15px;
-font-size:16px;
-font-weight:600;
-color:#1e293b;
-background:#f8fafc;
-}
-
-.table{
 margin-top:10px;
+}
+
+select, input{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
 }
 
 .row{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:10px 0;
-border-bottom:1px solid #eee;
-}
-
-.row:last-child{
-border:none;
+margin-top:10px;
 }
 
 .item{
-font-size:15px;
-color:#0f172a;
 font-weight:600;
 }
 
 input{
 width:80px;
-padding:8px;
-border-radius:10px;
-border:1px solid #cbd5f5;
 text-align:center;
-font-size:16px;
-font-weight:600;
-color:#1e293b;
-background:#f8fafc;
 }
 
 button{
 width:100%;
 padding:15px;
-font-size:18px;
-background:linear-gradient(135deg,#1e3a8a,#3b82f6);
+margin-top:20px;
+background:#1e3a8a;
 color:white;
 border:none;
-border-radius:12px;
-margin-top:20px;
+border-radius:10px;
+font-size:18px;
 font-weight:700;
-letter-spacing:0.5px;
-transition:0.2s;
-box-shadow:0 6px 15px rgba(30,58,138,0.3);
 }
-
-button:active{
-transform:scale(0.97);
-}
-
-button:disabled{
-background:gray;
-}
-
 </style>
-
 </head>
 
 <body>
@@ -133,49 +95,14 @@ background:gray;
 <option>Akhwat</option>
 </select>
 
-<div class="table">
-
-<div class="row">
-<span class="item">Tahu Batagor</span>
-<input type="number" id="tahu_batagor">
-</div>
-
-<div class="row">
-<span class="item">Cilok</span>
-<input type="number" id="cilok">
-</div>
-
-<div class="row">
-<span class="item">Cimol Cireng</span>
-<input type="number" id="cimol_cireng">
-</div>
-
-<div class="row">
-<span class="item">Kripik Kolek</span>
-<input type="number" id="kripik_kolek">
-</div>
-
-<div class="row">
-<span class="item">Piscok Molen</span>
-<input type="number" id="piscok_molen">
-</div>
-
-<div class="row">
-<span class="item">Dimsum Maklor Moci</span>
-<input type="number" id="dimsum_maklor_moci">
-</div>
-
-<div class="row">
-<span class="item">Kebab</span>
-<input type="number" id="kebab">
-</div>
-
-<div class="row">
-<span class="item">Sosis Roti Gurita</span>
-<input type="number" id="sosis_roti_gurita">
-</div>
-
-</div>
+<div class="row"><span class="item">Tahu Batagor</span><input type="number" id="tahu_batagor"></div>
+<div class="row"><span class="item">Cilok</span><input type="number" id="cilok"></div>
+<div class="row"><span class="item">Cimol Cireng</span><input type="number" id="cimol_cireng"></div>
+<div class="row"><span class="item">Kripik Kolek</span><input type="number" id="kripik_kolek"></div>
+<div class="row"><span class="item">Piscok Molen</span><input type="number" id="piscok_molen"></div>
+<div class="row"><span class="item">Dimsum Maklor Moci</span><input type="number" id="dimsum_maklor_moci"></div>
+<div class="row"><span class="item">Kebab</span><input type="number" id="kebab"></div>
+<div class="row"><span class="item">Sosis Roti Gurita</span><input type="number" id="sosis_roti_gurita"></div>
 
 <button id="tombol" onclick="kirim()">Simpan</button>
 
@@ -227,31 +154,6 @@ alert("Data berhasil tersimpan");
 
 }
 
-async function kirimBarang(barang,jumlah,tempat,jenis){
-
-if(jumlah=="" || jumlah==0)return;
-
-let data = {
-  waktu: new Date().toISOString(),
-  tempat: tempat,
-  barang: barang,
-  jumlah: jumlah,
-  jenis: jenis
-};
-
-// 1. simpan ke firebase
-await db.ref("jajan").push(data);
-
-// 2. kirim ke spreadsheet
-await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
-  method: "POST",
-  mode: "no-cors", // 👈 ini penting
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(data)
-});
-
 function kosongkan(){
 
 document.getElementById("tahu_batagor").value="";
@@ -266,22 +168,6 @@ document.getElementById("sosis_roti_gurita").value="";
 }
 
 </script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
-  authDomain: "cilok-86ced.firebaseapp.com",
-  databaseURL: "https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "cilok-86ced",
-  storageBucket: "cilok-86ced.firebasestorage.app",
-  messagingSenderId: "1038629771281",
-  appId: "1:1038629771281:web:45d56ba73acaf6613a79b0"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-</script>
 </body>
 </html>
