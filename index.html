@@ -186,29 +186,44 @@ background:gray;
 
 async function kirim(){
 
-var tombol=document.getElementById("tombol");
+var tombol = document.getElementById("tombol");
 
-if(tombol.disabled) return; // anti double klik
+if(tombol.disabled) return;
 
+tombol.innerText = "Mengirim...";
+tombol.disabled = true;
 
-tombol.innerText="Mengirim...";
-tombol.disabled=true;
+var tempat = document.getElementById("tempat").value;
+var jenis = document.getElementById("jenis").value;
 
-var tempat=document.getElementById("tempat").value;
-var jenis=document.getElementById("jenis").value;
+let data = [
+  { barang: "Tahu Batagor", jumlah: document.getElementById("tahu_batagor").value },
+  { barang: "Cilok", jumlah: document.getElementById("cilok").value },
+  { barang: "Cimol Cireng", jumlah: document.getElementById("cimol_cireng").value },
+  { barang: "Kripik Kolek", jumlah: document.getElementById("kripik_kolek").value },
+  { barang: "Piscok Molen", jumlah: document.getElementById("piscok_molen").value },
+  { barang: "Dimsum Maklor Moci", jumlah: document.getElementById("dimsum_maklor_moci").value },
+  { barang: "Kebab", jumlah: document.getElementById("kebab").value },
+  { barang: "Sosis Roti Gurita", jumlah: document.getElementById("sosis_roti_gurita").value }
+];
 
-await kirimBarang("Tahu Batagor", document.getElementById("tahu_batagor").value, tempat, jenis);
-await kirimBarang("Cilok", document.getElementById("cilok").value, tempat, jenis);
-await kirimBarang("Cimol Cireng", document.getElementById("cimol_cireng").value, tempat, jenis);
-await kirimBarang("Kripik Kolek", document.getElementById("kripik_kolek").value, tempat, jenis);
-await kirimBarang("Piscok Molen", document.getElementById("piscok_molen").value, tempat, jenis);
-await kirimBarang("Dimsum Maklor Moci", document.getElementById("dimsum_maklor_moci").value, tempat, jenis);
-await kirimBarang("Kebab", document.getElementById("kebab").value, tempat, jenis);
-await kirimBarang("Sosis Roti Gurita", document.getElementById("sosis_roti_gurita").value, tempat, jenis);
+// kirim sekali saja
+await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+  method: "POST",
+  mode: "no-cors",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    waktu: new Date().toISOString(),
+    tempat: tempat,
+    jenis: jenis,
+    items: data
+  })
+});
 
-
-tombol.innerText="Simpan";
-tombol.disabled=false;
+tombol.innerText = "Simpan";
+tombol.disabled = false;
 
 kosongkan();
 
@@ -232,12 +247,14 @@ let data = {
 await db.ref("jajan").push(data);
 
 // 2. kirim ke spreadsheet
-fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
-  method:"POST",
+await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+  method: "POST",
+  mode: "no-cors", // 👈 ini penting
+  headers: {
+    "Content-Type": "application/json"
+  },
   body: JSON.stringify(data)
 });
-
-}
 
 function kosongkan(){
 
