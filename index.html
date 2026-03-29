@@ -210,18 +210,18 @@ async function kirim(){
   try{
 
     // kirim SEMUA DATA SEKALIGUS (tidak satu-satu)
-    await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        waktu: new Date().toLocaleString(),
-        tempat: tempat,
-        jenis: jenis,
-        items: items
-      })
-    });
+await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    waktu: new Date().toLocaleString(),
+    tempat: tempat,
+    jenis: jenis,
+    items: items
+  })
+});
 
     // simpan ke Firebase satu per satu (biar tetap realtime)
     for(let item of items){
