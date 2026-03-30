@@ -186,84 +186,69 @@ background:gray;
 
 async function kirim(){
 
-  const tombol = document.getElementById("tombol");
+var tombol=document.getElementById("tombol");
 
-  if(tombol.disabled) return;
+if(tombol.disabled) return; // anti double klik
 
-  tombol.innerText = "Mengirim...";
-  tombol.disabled = true;
 
-  const tempat = document.getElementById("tempat").value;
-  const jenis = document.getElementById("jenis").value;
+tombol.innerText="Mengirim...";
+tombol.disabled=true;
 
-  const items = [
-    {barang:"Tahu Batagor", jumlah: document.getElementById("tahu_batagor").value},
-    {barang:"Cilok", jumlah: document.getElementById("cilok").value},
-    {barang:"Cimol Cireng", jumlah: document.getElementById("cimol_cireng").value},
-    {barang:"Kripik Kolek", jumlah: document.getElementById("kripik_kolek").value},
-    {barang:"Piscok Molen", jumlah: document.getElementById("piscok_molen").value},
-    {barang:"Dimsum Maklor Moci", jumlah: document.getElementById("dimsum_maklor_moci").value},
-    {barang:"Kebab", jumlah: document.getElementById("kebab").value},
-    {barang:"Sosis Roti Gurita", jumlah: document.getElementById("sosis_roti_gurita").value}
-  ];
+var tempat=document.getElementById("tempat").value;
+var jenis=document.getElementById("jenis").value;
 
-  try{
+await kirimBarang("Tahu Batagor", document.getElementById("tahu_batagor").value, tempat, jenis);
+await kirimBarang("Cilok", document.getElementById("cilok").value, tempat, jenis);
+await kirimBarang("Cimol Cireng", document.getElementById("cimol_cireng").value, tempat, jenis);
+await kirimBarang("Kripik Kolek", document.getElementById("kripik_kolek").value, tempat, jenis);
+await kirimBarang("Piscok Molen", document.getElementById("piscok_molen").value, tempat, jenis);
+await kirimBarang("Dimsum Maklor Moci", document.getElementById("dimsum_maklor_moci").value, tempat, jenis);
+await kirimBarang("Kebab", document.getElementById("kebab").value, tempat, jenis);
+await kirimBarang("Sosis Roti Gurita", document.getElementById("sosis_roti_gurita").value, tempat, jenis);
 
-    // kirim SEMUA DATA SEKALIGUS (tidak satu-satu)
-await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    waktu: new Date().toLocaleString(),
-    tempat: tempat,
-    jenis: jenis,
-    items: items
-  })
+
+tombol.innerText="Simpan";
+tombol.disabled=false;
+
+kosongkan();
+
+alert("Data berhasil tersimpan");
+
+}
+
+async function kirimBarang(barang,jumlah,tempat,jenis){
+
+if(jumlah=="" || jumlah==0)return;
+
+let data = {
+  waktu: new Date().toISOString(),
+  tempat: tempat,
+  barang: barang,
+  jumlah: jumlah,
+  jenis: jenis
+};
+
+// 1. simpan ke firebase
+await db.ref("jajan").push(data);
+
+// 2. kirim ke spreadsheet
+fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+  method:"POST",
+  body: JSON.stringify(data)
 });
-
-    // simpan ke Firebase satu per satu (biar tetap realtime)
-    for(let item of items){
-
-      let jumlah = Number(item.jumlah);
-
-      if(!jumlah || jumlah <= 0) continue;
-
-      await db.ref("jajan").push({
-        waktu: new Date().toLocaleString(),
-        tempat: tempat,
-        barang: item.barang,
-        jumlah: jumlah,
-        jenis: jenis
-      });
-
-    }
-
-    alert("✅ Data berhasil terkirim!");
-
-  }catch(err){
-    console.log(err);
-    alert("❌ Gagal kirim data!");
-  }
-
-  tombol.innerText = "Simpan";
-  tombol.disabled = false;
-
-  kosongkan();
 
 }
 
 function kosongkan(){
 
-  document.getElementById("tahu_batagor").value="";
-  document.getElementById("cilok").value="";
-  document.getElementById("cimol_cireng").value="";
-  document.getElementById("kripik_kolek").value="";
-  document.getElementById("piscok_molen").value="";
-  document.getElementById("dimsum_maklor_moci").value="";
-  document.getElementById("kebab").value="";
-  document.getElementById("sosis_roti_gurita").value="";
+document.getElementById("tahu_batagor").value="";
+document.getElementById("cilok").value="";
+document.getElementById("cimol_cireng").value="";
+document.getElementById("kripik_kolek").value="";
+document.getElementById("piscok_molen").value="";
+document.getElementById("dimsum_maklor_moci").value="";
+document.getElementById("kebab").value="";
+document.getElementById("sosis_roti_gurita").value="";
 
 }
 
