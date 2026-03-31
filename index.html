@@ -188,8 +188,7 @@ async function kirim(){
 
 var tombol=document.getElementById("tombol");
 
-if(tombol.disabled) return; // anti double klik
-
+if(tombol.disabled) return;
 
 tombol.innerText="Mengirim...";
 tombol.disabled=true;
@@ -197,15 +196,42 @@ tombol.disabled=true;
 var tempat=document.getElementById("tempat").value;
 var jenis=document.getElementById("jenis").value;
 
-await kirimBarang("Tahu Batagor", document.getElementById("tahu_batagor").value, tempat, jenis);
-await kirimBarang("Cilok", document.getElementById("cilok").value, tempat, jenis);
-await kirimBarang("Cimol Cireng", document.getElementById("cimol_cireng").value, tempat, jenis);
-await kirimBarang("Kripik Kolek", document.getElementById("kripik_kolek").value, tempat, jenis);
-await kirimBarang("Piscok Molen", document.getElementById("piscok_molen").value, tempat, jenis);
-await kirimBarang("Dimsum Maklor Moci", document.getElementById("dimsum_maklor_moci").value, tempat, jenis);
-await kirimBarang("Kebab", document.getElementById("kebab").value, tempat, jenis);
-await kirimBarang("Sosis Roti Gurita", document.getElementById("sosis_roti_gurita").value, tempat, jenis);
+let items = [];
 
+function tambah(nama,id){
+  let val = document.getElementById(id).value;
+  if(val && val != 0){
+    items.push({
+      barang:nama,
+      jumlah:val
+    });
+  }
+}
+
+tambah("Tahu Batagor","tahu_batagor");
+tambah("Cilok","cilok");
+tambah("Cimol Cireng","cimol_cireng");
+tambah("Kripik Kolek","kripik_kolek");
+tambah("Piscok Molen","piscok_molen");
+tambah("Dimsum Maklor Moci","dimsum_maklor_moci");
+tambah("Kebab","kebab");
+tambah("Sosis Roti Gurita","sosis_roti_gurita");
+
+let data = {
+  waktu: new Date().toISOString(),
+  tempat: tempat,
+  jenis: jenis,
+  items: items
+};
+
+// firebase
+await db.ref("jajan").push(data);
+
+// spreadsheet (sekali kirim)
+await fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
+  method:"POST",
+  body: JSON.stringify(data)
+});
 
 tombol.innerText="Simpan";
 tombol.disabled=false;
@@ -213,8 +239,7 @@ tombol.disabled=false;
 kosongkan();
 
 alert("Data berhasil tersimpan");
-
-}
+} 
 
 async function kirimBarang(barang,jumlah,tempat,jenis){
 
@@ -232,12 +257,7 @@ let data = {
 await db.ref("jajan").push(data);
 
 // 2. kirim ke spreadsheet
-fetch("https://script.google.com/macros/s/AKfycbzvF8R3gHR3MGTAWSXg20HbyofvBYEP92H_jfXyGxDKhWW50hn3T5-DsHUEmTTAbxQcbg/exec", {
-  method:"POST",
-  body: JSON.stringify(data)
-});
 
-}
 
 function kosongkan(){
 
