@@ -218,7 +218,7 @@ tambah("Kebab","kebab");
 tambah("Sosis Roti Gurita","sosis_roti_gurita");
 
 let data = {
-  waktu: new Date().toISOString(),
+  waktu: new Date().toLocaleString("sv-SE", { timeZone: "Asia/Jakarta" }),
   tempat: tempat,
   jenis: jenis,
   items: items
