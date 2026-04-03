@@ -4,6 +4,7 @@
 <title>Input Jajan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="manifest" href="manifest.json">
+
 <style>
 body{
 font-family: 'Segoe UI', Arial, sans-serif;
@@ -30,14 +31,13 @@ text-align:center;
 margin-bottom:15px;
 color:#1e3a8a;
 font-weight:800;
-letter-spacing:0.5px;
 }
 
 label{
 font-weight:700;
 font-size:13px;
 color:#334155;
-margin-top:8px;
+margin-top:10px;
 display:block;
 }
 
@@ -49,7 +49,6 @@ border:1px solid #cbd5f5;
 margin-bottom:15px;
 font-size:16px;
 font-weight:600;
-color:#1e293b;
 background:#f8fafc;
 }
 
@@ -71,11 +70,10 @@ border:none;
 
 .item{
 font-size:15px;
-color:#0f172a;
 font-weight:600;
 }
 
-input{
+input[type="number"]{
 width:80px;
 padding:8px;
 border-radius:10px;
@@ -83,8 +81,19 @@ border:1px solid #cbd5f5;
 text-align:center;
 font-size:16px;
 font-weight:600;
-color:#1e293b;
 background:#f8fafc;
+}
+
+input[type="file"]{
+width:100%;
+margin-bottom:10px;
+}
+
+img{
+width:100%;
+border-radius:10px;
+margin-top:10px;
+display:none;
 }
 
 button{
@@ -97,19 +106,11 @@ border:none;
 border-radius:12px;
 margin-top:20px;
 font-weight:700;
-letter-spacing:0.5px;
-transition:0.2s;
-box-shadow:0 6px 15px rgba(30,58,138,0.3);
-}
-
-button:active{
-transform:scale(0.97);
 }
 
 button:disabled{
 background:gray;
 }
-
 </style>
 
 </head>
@@ -120,6 +121,11 @@ background:gray;
 <div class="card">
 
 <h2>Input Jajan</h2>
+
+<!-- ✅ FOTO DI ATAS -->
+<label>Foto Laporan</label>
+<input type="file" id="foto" accept="image/*" capture="environment">
+<img id="preview">
 
 <label>Jenis</label>
 <select id="jenis">
@@ -135,45 +141,14 @@ background:gray;
 
 <div class="table">
 
-<div class="row">
-<span class="item">Tahu Batagor</span>
-<input type="number" id="tahu_batagor">
-</div>
-
-<div class="row">
-<span class="item">Cilok</span>
-<input type="number" id="cilok">
-</div>
-
-<div class="row">
-<span class="item">Cimol Cireng</span>
-<input type="number" id="cimol_cireng">
-</div>
-
-<div class="row">
-<span class="item">Kripik Kolek</span>
-<input type="number" id="kripik_kolek">
-</div>
-
-<div class="row">
-<span class="item">Piscok Molen</span>
-<input type="number" id="piscok_molen">
-</div>
-
-<div class="row">
-<span class="item">Dimsum Maklor Moci</span>
-<input type="number" id="dimsum_maklor_moci">
-</div>
-
-<div class="row">
-<span class="item">Kebab</span>
-<input type="number" id="kebab">
-</div>
-
-<div class="row">
-<span class="item">Sosis Roti Gurita</span>
-<input type="number" id="sosis_roti_gurita">
-</div>
+<div class="row"><span class="item">Tahu Batagor</span><input type="number" id="tahu_batagor"></div>
+<div class="row"><span class="item">Cilok</span><input type="number" id="cilok"></div>
+<div class="row"><span class="item">Cimol Cireng</span><input type="number" id="cimol_cireng"></div>
+<div class="row"><span class="item">Kripik Kolek</span><input type="number" id="kripik_kolek"></div>
+<div class="row"><span class="item">Piscok Molen</span><input type="number" id="piscok_molen"></div>
+<div class="row"><span class="item">Dimsum Maklor Moci</span><input type="number" id="dimsum_maklor_moci"></div>
+<div class="row"><span class="item">Kebab</span><input type="number" id="kebab"></div>
+<div class="row"><span class="item">Sosis Roti Gurita</span><input type="number" id="sosis_roti_gurita"></div>
 
 </div>
 
@@ -184,10 +159,50 @@ background:gray;
 
 <script>
 
+// ✅ PREVIEW FOTO
+document.getElementById("foto").addEventListener("change", function(e){
+  let file = e.target.files[0];
+  if(!file) return;
+
+  let reader = new FileReader();
+  reader.onload = function(ev){
+    let img = document.getElementById("preview");
+    img.src = ev.target.result;
+    img.style.display = "block";
+  }
+  reader.readAsDataURL(file);
+});
+
+// ✅ KOMPRES GAMBAR
+function kompresGambar(file){
+  return new Promise((resolve)=>{
+    let reader = new FileReader();
+    reader.onload = function(e){
+      let img = new Image();
+      img.src = e.target.result;
+
+      img.onload = function(){
+        let canvas = document.createElement("canvas");
+        let maxWidth = 400;
+
+        let scale = maxWidth / img.width;
+        canvas.width = maxWidth;
+        canvas.height = img.height * scale;
+
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+
+        let base64 = canvas.toDataURL("image/jpeg",0.5);
+        resolve(base64);
+      }
+    }
+    reader.readAsDataURL(file);
+  });
+}
+
 async function kirim(){
 
 var tombol=document.getElementById("tombol");
-
 if(tombol.disabled) return;
 
 tombol.innerText="Mengirim...";
@@ -201,10 +216,7 @@ let items = [];
 function tambah(nama,id){
   let val = document.getElementById(id).value;
   if(val && val != 0){
-    items.push({
-      barang:nama,
-      jumlah:val
-    });
+    items.push({barang:nama,jumlah:val});
   }
 }
 
@@ -217,38 +229,46 @@ tambah("Dimsum Maklor Moci","dimsum_maklor_moci");
 tambah("Kebab","kebab");
 tambah("Sosis Roti Gurita","sosis_roti_gurita");
 
-let data = {
-  waktu: new Date().toLocaleString("sv-SE", { timeZone: "Asia/Jakarta" }),
-  tempat: tempat,
-  jenis: jenis,
-  items: items
-};
+// ✅ FOTO
+let fotoInput = document.getElementById("foto");
+let fotoBase64 = "";
 
-// ✅ HANYA KE FIREBASE (INI KUNCI)
-await db.ref("jajan").push(data);
+try{
+  if(fotoInput.files.length > 0){
+    fotoBase64 = await kompresGambar(fotoInput.files[0]);
+  }
+
+  let data = {
+    waktu: new Date().toLocaleString("sv-SE", { timeZone: "Asia/Jakarta" }),
+    tempat: tempat,
+    jenis: jenis,
+    items: items,
+    foto: fotoBase64
+  };
+
+  await db.ref("jajan").push(data);
+
+  alert("Data berhasil tersimpan");
+
+  kosongkan();
+
+}catch(e){
+  alert("Gagal mengirim, cek koneksi");
+}
 
 tombol.innerText="Simpan";
 tombol.disabled=false;
 
-kosongkan();
-
-alert("Data berhasil tersimpan");
 }
 
 function kosongkan(){
-
-document.getElementById("tahu_batagor").value="";
-document.getElementById("cilok").value="";
-document.getElementById("cimol_cireng").value="";
-document.getElementById("kripik_kolek").value="";
-document.getElementById("piscok_molen").value="";
-document.getElementById("dimsum_maklor_moci").value="";
-document.getElementById("kebab").value="";
-document.getElementById("sosis_roti_gurita").value="";
-
+document.querySelectorAll("input[type=number]").forEach(i=>i.value="");
+document.getElementById("foto").value="";
+document.getElementById("preview").style.display="none";
 }
 
 </script>
+
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
@@ -266,5 +286,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 </script>
+
 </body>
 </html>
