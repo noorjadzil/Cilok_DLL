@@ -238,7 +238,9 @@ let date = new Date(waktu);
 let hari = date.toLocaleDateString("id-ID",{weekday:"long"});
 let tanggal = date.toLocaleDateString("id-ID");
 
-return `${hari}, ${tanggal}`;
+let jam = date.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
+
+return `${jam} ${hari}, ${tanggal}`;
 }
 
 // PREVIEW
