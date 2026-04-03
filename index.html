@@ -3,11 +3,29 @@
 <head>
 <title>Input Jajan</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="manifest.json">
+
 <style>
+.tabs{
+display:flex;
+background:#1e3a8a;
+}
+
+.tab-btn{
+flex:1;
+padding:15px;
+border:none;
+background:transparent;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.tab-btn.active{
+background:#3b82f6;
+}
+
 body{
-font-family: 'Segoe UI', Arial, sans-serif;
-color:#0f172a;
+font-family:'Segoe UI',Arial;
 margin:0;
 background:linear-gradient(135deg,#0f172a,#1e3a8a);
 }
@@ -27,320 +45,176 @@ box-shadow:0 8px 20px rgba(0,0,0,0.15);
 
 h2{
 text-align:center;
-margin-bottom:15px;
 color:#1e3a8a;
-font-weight:800;
-letter-spacing:0.5px;
 }
 
-label{
-font-weight:700;
-font-size:13px;
-color:#334155;
-margin-top:8px;
-display:block;
-}
-
-select{
+select,input{
 width:100%;
-padding:12px;
+padding:10px;
+margin-bottom:10px;
 border-radius:10px;
-border:1px solid #cbd5f5;
-margin-bottom:15px;
-font-size:16px;
-font-weight:600;
-color:#1e293b;
-background:#f8fafc;
-}
-
-.table{
-margin-top:10px;
+border:1px solid #ccc;
 }
 
 .row{
 display:flex;
 justify-content:space-between;
-align-items:center;
-padding:10px 0;
-border-bottom:1px solid #eee;
+margin-bottom:8px;
 }
 
-.row:last-child{
-border:none;
-}
-
-.item{
-font-size:15px;
-color:#0f172a;
-font-weight:600;
-}
-
-input{
+.row input{
 width:80px;
-padding:8px;
-border-radius:10px;
-border:1px solid #cbd5f5;
-text-align:center;
-font-size:16px;
-font-weight:600;
-color:#1e293b;
-background:#f8fafc;
 }
 
 button{
 width:100%;
 padding:15px;
-font-size:18px;
-background:linear-gradient(135deg,#1e3a8a,#3b82f6);
+background:#3b82f6;
 color:white;
 border:none;
 border-radius:12px;
-margin-top:20px;
-font-weight:700;
-letter-spacing:0.5px;
-transition:0.2s;
-box-shadow:0 6px 15px rgba(30,58,138,0.3);
+font-weight:bold;
 }
-
-button:active{
-transform:scale(0.97);
-}
-
-button:disabled{
-background:gray;
-}
-
 </style>
-
 </head>
 
 <body>
+
 <div class="tabs">
 <button class="tab-btn active" onclick="bukaTab('input')">Input</button>
 <button class="tab-btn" onclick="bukaTab('laporan')">Laporan</button>
 </div>
 
 <div class="container">
-<div id="input" class="tab-content">
+
+<!-- INPUT -->
+<div id="input">
 <div class="card">
 
 <h2>Input Jajan</h2>
-<label>Foto</label>
-<input type="file" id="foto" accept="image/*" capture="environment">
-<img id="preview" style="width:100%;margin-top:10px;border-radius:10px;display:none;">
 
-<label>Jenis</label>
 <select id="jenis">
 <option value="Masuk">Jajan Masuk</option>
 <option value="Sisa">Jajan Sisa</option>
 </select>
 
-<label>Tempat</label>
 <select id="tempat">
 <option>Ikhwan</option>
 <option>Akhwat</option>
 </select>
 
-<div class="table">
-
-<div class="row">
-<span class="item">Tahu Batagor</span>
-<input type="number" id="tahu_batagor">
-</div>
-
-<div class="row">
-<span class="item">Cilok</span>
-<input type="number" id="cilok">
-</div>
-
-<div class="row">
-<span class="item">Cimol Cireng</span>
-<input type="number" id="cimol_cireng">
-</div>
-
-<div class="row">
-<span class="item">Kripik Kolek</span>
-<input type="number" id="kripik_kolek">
-</div>
-
-<div class="row">
-<span class="item">Piscok Molen</span>
-<input type="number" id="piscok_molen">
-</div>
-
-<div class="row">
-<span class="item">Dimsum Maklor Moci</span>
-<input type="number" id="dimsum_maklor_moci">
-</div>
-
-<div class="row">
-<span class="item">Kebab</span>
-<input type="number" id="kebab">
-</div>
-
-<div class="row">
-<span class="item">Sosis Roti Gurita</span>
-<input type="number" id="sosis_roti_gurita">
-</div>
-
-</div>
+<div class="row"><span>Tahu Batagor</span><input id="tahu"></div>
+<div class="row"><span>Cilok</span><input id="cilok"></div>
+<div class="row"><span>Cimol</span><input id="cimol"></div>
+<div class="row"><span>Kripik</span><input id="kripik"></div>
+<div class="row"><span>Piscok</span><input id="piscok"></div>
+<div class="row"><span>Dimsum</span><input id="dimsum"></div>
+<div class="row"><span>Kebab</span><input id="kebab"></div>
+<div class="row"><span>Sosis</span><input id="sosis"></div>
 
 <button id="tombol" onclick="kirim()">Simpan</button>
 
 </div>
-<div id="laporanTab" class="tab-content" style="display:none;">
+</div>
+
+<!-- LAPORAN -->
+<div id="laporanTab" style="display:none;">
 <div class="card">
 <h2>Laporan</h2>
 <div id="laporan"></div>
 </div>
 </div>
 
-
+</div>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
-  authDomain: "cilok-86ced.firebaseapp.com",
-  databaseURL: "https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "cilok-86ced",
-  storageBucket: "cilok-86ced.firebasestorage.app",
-  messagingSenderId: "1038629771281",
-  appId: "1:1038629771281:web:45d56ba73acaf6613a79b0"
+function bukaTab(nama){
+document.getElementById("input").style.display="none";
+document.getElementById("laporanTab").style.display="none";
+
+if(nama==="input"){
+document.getElementById("input").style.display="block";
+}else{
+document.getElementById("laporanTab").style.display="block";
+}
+
+document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+event.target.classList.add("active");
+}
+
+const firebaseConfig={
+apiKey:"AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
+authDomain:"cilok-86ced.firebaseapp.com",
+databaseURL:"https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"cilok-86ced"
 };
 
 firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
 
-const db = firebase.database();
-const storage = firebase.storage();
-
-// 🔥 PREVIEW FOTO
-document.getElementById("foto").addEventListener("change", function(e){
-  const file = e.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      const img = document.getElementById("preview");
-      img.src = e.target.result;
-      img.style.display = "block";
-    }
-    reader.readAsDataURL(file);
-  }
-});
-
-// 🔥 KIRIM DATA
 async function kirim(){
 
-var tombol=document.getElementById("tombol");
-
-if(tombol.disabled) return;
+let tombol=document.getElementById("tombol");
+if(tombol.disabled)return;
 
 tombol.innerText="Mengirim...";
 tombol.disabled=true;
 
-var tempat=document.getElementById("tempat").value;
-var jenis=document.getElementById("jenis").value;
-
-let items = [];
-
-function tambah(nama,id){
-  let val = document.getElementById(id).value;
-  if(val && val != 0){
-    items.push({
-      barang:nama,
-      jumlah:val
-    });
-  }
-}
-
-tambah("Tahu Batagor","tahu_batagor");
-tambah("Cilok","cilok");
-tambah("Cimol Cireng","cimol_cireng");
-tambah("Kripik Kolek","kripik_kolek");
-tambah("Piscok Molen","piscok_molen");
-tambah("Dimsum Maklor Moci","dimsum_maklor_moci");
-tambah("Kebab","kebab");
-tambah("Sosis Roti Gurita","sosis_roti_gurita");
-
-// upload foto
-let file = document.getElementById("foto").files[0];
-let fotoURL = "";
-
-if(file){
-  let namaFile = Date.now() + "_" + file.name;
-  let ref = storage.ref("foto/" + namaFile);
-
-  await ref.put(file);
-  fotoURL = await ref.getDownloadURL();
-}
-
-// kirim
-let data = {
-  waktu: new Date().toLocaleString("sv-SE", { timeZone: "Asia/Jakarta" }),
-  tempat: tempat,
-  jenis: jenis,
-  foto: fotoURL,
-  items: items
+let data={
+waktu:new Date().toLocaleString("sv-SE",{timeZone:"Asia/Jakarta"}),
+tempat:tempat.value,
+jenis:jenis.value,
+items:[
+{barang:"Tahu",jumlah:tahu.value},
+{barang:"Cilok",jumlah:cilok.value},
+{barang:"Cimol",jumlah:cimol.value},
+{barang:"Kripik",jumlah:kripik.value},
+{barang:"Piscok",jumlah:piscok.value},
+{barang:"Dimsum",jumlah:dimsum.value},
+{barang:"Kebab",jumlah:kebab.value},
+{barang:"Sosis",jumlah:sosis.value}
+]
 };
 
+try{
 await db.ref("jajan").push(data);
+alert("Berhasil");
+}catch(e){
+alert("Gagal: "+e.message);
+}
 
 tombol.innerText="Simpan";
 tombol.disabled=false;
-
-kosongkan();
-document.getElementById("preview").style.display="none";
-
-alert("Data berhasil tersimpan");
 }
 
-// kosongkan
-function kosongkan(){
-document.getElementById("tahu_batagor").value="";
-document.getElementById("cilok").value="";
-document.getElementById("cimol_cireng").value="";
-document.getElementById("kripik_kolek").value="";
-document.getElementById("piscok_molen").value="";
-document.getElementById("dimsum_maklor_moci").value="";
-document.getElementById("kebab").value="";
-document.getElementById("sosis_roti_gurita").value="";
+db.ref("jajan").limitToLast(20).on("value",snap=>{
+
+let ikhwan="<h3>Ikhwan</h3>";
+let akhwat="<h3>Akhwat</h3>";
+
+snap.forEach(c=>{
+let d=c.val();
+
+let isi="<small>"+d.waktu+"</small>";
+
+d.items.forEach(i=>{
+if(i.jumlah && i.jumlah!=0){
+isi+="<p>"+i.barang+" : "+i.jumlah+"</p>";
 }
+});
 
-// 🔥 LAPORAN
-db.ref("jajan").limitToLast(20).on("value", function(snapshot){
+if(d.tempat=="Ikhwan") ikhwan+=isi;
+else akhwat+=isi;
+});
 
-  let ikhwanHTML = "<h3>Ikhwan</h3>";
-  let akhwatHTML = "<h3>Akhwat</h3>";
-
-  snapshot.forEach(child => {
-    let data = child.val();
-
-    let isi = `
-      <div style="margin-bottom:20px;">
-        ${data.foto ? `<img src="${data.foto}" style="width:100%;border-radius:12px;margin-bottom:8px;">` : ""}
-        <small>${data.waktu}</small>
-    `;
-
-    data.items.forEach(item=>{
-      isi += `<p>${item.barang} : ${item.jumlah}</p>`;
-    });
-
-    isi += `</div>`;
-
-    if(data.tempat === "Ikhwan"){
-      ikhwanHTML += isi;
-    } else {
-      akhwatHTML += isi;
-    }
-  });
-
-  document.getElementById("laporan").innerHTML = ikhwanHTML + "<hr>" + akhwatHTML;
+laporan.innerHTML=ikhwan+"<hr>"+akhwat;
 
 });
 </script>
+
 </body>
 </html>
