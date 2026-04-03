@@ -111,7 +111,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 .laporan-header{
-font-size:17px;
+font-size:18px;
 font-weight:700;
 color:#1e3a8a;
 margin-bottom:6px;
@@ -127,6 +127,7 @@ font-size:14px;
 font-weight:700;
 margin-bottom:8px;
 }
+
 .laporan-items{
 margin-top:6px;
 line-height:1.5;
@@ -167,48 +168,14 @@ font-weight:600;
 <option>Akhwat</option>
 </select>
 
-<div class="row">
-<select class="barang">
-<option value="Tahu Batagor">Tahu Batagor</option>
-<option value="Cilok">Cilok</option>
-<option value="Cimol Cireng">Cimol Cireng</option>
-<option value="Kripik Kolek">Kripik Kolek</option>
-<option value="Piscok Molen">Piscok Molen</option>
-<option value="Dimsum Maklor Moci">Dimsum Maklor Moci</option>
-<option value="Kebab">Kebab</option>
-<option value="Sosis Roti Gurita">Sosis Roti Gurita</option>
-</select>
-<input type="number" class="jumlah">
-</div>
-
-<div class="row">
-<select class="barang">
-<option value="Tahu Batagor">Tahu Batagor</option>
-<option value="Cilok">Cilok</option>
-<option value="Cimol Cireng">Cimol Cireng</option>
-<option value="Kripik Kolek">Kripik Kolek</option>
-<option value="Piscok Molen">Piscok Molen</option>
-<option value="Dimsum Maklor Moci">Dimsum Maklor Moci</option>
-<option value="Kebab">Kebab</option>
-<option value="Sosis Roti Gurita">Sosis Roti Gurita</option>
-</select>
-<input type="number" class="jumlah">
-</div>
-
-<div class="row">
-<span>Tambahan 2</span>
-<select class="barang">
-<option value="Tahu Batagor">Tahu Batagor</option>
-<option value="Cilok">Cilok</option>
-<option value="Cimol Cireng">Cimol Cireng</option>
-<option value="Kripik Kolek">Kripik Kolek</option>
-<option value="Piscok Molen">Piscok Molen</option>
-<option value="Dimsum Maklor Moci">Dimsum Maklor Moci</option>
-<option value="Kebab">Kebab</option>
-<option value="Sosis Roti Gurita">Sosis Roti Gurita</option>
-</select>
-<input type="number" class="jumlah">
-</div>
+<div class="row"><span>Tahu Batagor</span><input type="number" id="tahu_batagor"></div>
+<div class="row"><span>Cilok</span><input type="number" id="cilok"></div>
+<div class="row"><span>Cimol Cireng</span><input type="number" id="cimol_cireng"></div>
+<div class="row"><span>Kripik Kolek</span><input type="number" id="kripik_kolek"></div>
+<div class="row"><span>Piscok Molen</span><input type="number" id="piscok_molen"></div>
+<div class="row"><span>Dimsum Maklor Moci</span><input type="number" id="dimsum_maklor_moci"></div>
+<div class="row"><span>Kebab</span><input type="number" id="kebab"></div>
+<div class="row"><span>Sosis Roti Gurita</span><input type="number" id="sosis_roti_gurita"></div>
 
 <button id="tombol" onclick="kirim()">Simpan</button>
 
@@ -299,7 +266,6 @@ let jenis=document.getElementById("jenis").value;
 
 let items=[];
 
-// ================= INPUT UTAMA =================
 function tambah(nama,id){
 let val=document.getElementById(id).value;
 if(val && val!=0){
@@ -316,22 +282,6 @@ tambah("Dimsum Maklor Moci","dimsum_maklor_moci");
 tambah("Kebab","kebab");
 tambah("Sosis Roti Gurita","sosis_roti_gurita");
 
-// ================= TAMBAHAN BARU (2 INPUT BEBAS) =================
-document.querySelectorAll(".row").forEach(row=>{
-let select=row.querySelector(".barang");
-let jumlah=row.querySelector(".jumlah");
-
-if(select && jumlah){
-let barang=select.value;
-let val=jumlah.value;
-
-if(val && val!=0){
-items.push({barang:barang,jumlah:val});
-}
-}
-});
-
-// ================= FOTO =================
 let fotoBase64="";
 let fotoInput=document.getElementById("foto");
 
@@ -339,7 +289,6 @@ if(fotoInput.files.length>0){
 fotoBase64=await kompresGambar(fotoInput.files[0]);
 }
 
-// ================= DATA =================
 let data={
 waktu:new Date().toISOString(),
 tempat:tempat,
