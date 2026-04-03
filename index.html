@@ -175,6 +175,35 @@ font-weight:600;
 <div class="row"><span>Dimsum Maklor Moci</span><input type="number" id="dimsum_maklor_moci"></div>
 <div class="row"><span>Kebab</span><input type="number" id="kebab"></div>
 <div class="row"><span>Sosis Roti Gurita</span><input type="number" id="sosis_roti_gurita"></div>
+<div class="row">
+<span>Tambahan 1</span>
+<select class="barang">
+<option value="Tahu Batagor">Tahu Batagor</option>
+<option value="Cilok">Cilok</option>
+<option value="Cimol Cireng">Cimol Cireng</option>
+<option value="Kripik Kolek">Kripik Kolek</option>
+<option value="Piscok Molen">Piscok Molen</option>
+<option value="Dimsum Maklor Moci">Dimsum Maklor Moci</option>
+<option value="Kebab">Kebab</option>
+<option value="Sosis Roti Gurita">Sosis Roti Gurita</option>
+</select>
+<input type="number" class="jumlah">
+</div>
+
+<div class="row">
+<span>Tambahan 2</span>
+<select class="barang">
+<option value="Tahu Batagor">Tahu Batagor</option>
+<option value="Cilok">Cilok</option>
+<option value="Cimol Cireng">Cimol Cireng</option>
+<option value="Kripik Kolek">Kripik Kolek</option>
+<option value="Piscok Molen">Piscok Molen</option>
+<option value="Dimsum Maklor Moci">Dimsum Maklor Moci</option>
+<option value="Kebab">Kebab</option>
+<option value="Sosis Roti Gurita">Sosis Roti Gurita</option>
+</select>
+<input type="number" class="jumlah">
+</div>
 
 <button id="tombol" onclick="kirim()">Simpan</button>
 
@@ -265,6 +294,7 @@ let jenis=document.getElementById("jenis").value;
 
 let items=[];
 
+// ================= INPUT UTAMA =================
 function tambah(nama,id){
 let val=document.getElementById(id).value;
 if(val && val!=0){
@@ -281,6 +311,22 @@ tambah("Dimsum Maklor Moci","dimsum_maklor_moci");
 tambah("Kebab","kebab");
 tambah("Sosis Roti Gurita","sosis_roti_gurita");
 
+// ================= TAMBAHAN BARU (2 INPUT BEBAS) =================
+document.querySelectorAll(".row").forEach(row=>{
+let select=row.querySelector(".barang");
+let jumlah=row.querySelector(".jumlah");
+
+if(select && jumlah){
+let barang=select.value;
+let val=jumlah.value;
+
+if(val && val!=0){
+items.push({barang:barang,jumlah:val});
+}
+}
+});
+
+// ================= FOTO =================
 let fotoBase64="";
 let fotoInput=document.getElementById("foto");
 
@@ -288,6 +334,7 @@ if(fotoInput.files.length>0){
 fotoBase64=await kompresGambar(fotoInput.files[0]);
 }
 
+// ================= DATA =================
 let data={
 waktu:new Date().toISOString(),
 tempat:tempat,
