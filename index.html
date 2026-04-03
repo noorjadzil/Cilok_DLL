@@ -67,6 +67,12 @@ margin-bottom:10px;
 font-weight:600;
 }
 
+/* 🔥 PERBAIKAN: angka rata tengah */
+input[type="number"]{
+text-align:center;
+font-size:16px;
+}
+
 .row{
 display:flex;
 justify-content:space-between;
@@ -116,7 +122,7 @@ border-radius:10px;
 
 <div class="card">
 
-<!-- ================= INPUT ================= -->
+<!-- INPUT -->
 <div id="inputTab">
 
 <h2>Input Jajan</h2>
@@ -150,7 +156,7 @@ border-radius:10px;
 
 </div>
 
-<!-- ================= LAPORAN ================= -->
+<!-- LAPORAN -->
 <div id="laporanTab" style="display:none">
 <h2>Laporan</h2>
 <div id="listLaporan">Loading...</div>
@@ -161,7 +167,6 @@ border-radius:10px;
 
 <script>
 
-// TAB
 function showTab(tab,e){
 document.getElementById("inputTab").style.display = tab==="input"?"block":"none";
 document.getElementById("laporanTab").style.display = tab==="laporan"?"block":"none";
@@ -172,7 +177,7 @@ e.target.classList.add("active");
 if(tab==="laporan") loadLaporan();
 }
 
-// PREVIEW FOTO
+// PREVIEW
 document.getElementById("foto").addEventListener("change",function(e){
 let file=e.target.files[0];
 if(!file) return;
@@ -269,7 +274,7 @@ tombol.innerText="Simpan";
 tombol.disabled=false;
 }
 
-// LOAD LAPORAN
+// 🔥 PERBAIKAN LAPORAN (ENTER, bukan koma)
 function loadLaporan(){
 
 let list=document.getElementById("listLaporan");
@@ -288,14 +293,14 @@ let arr=Object.values(snap.val()).reverse();
 
 arr.forEach(d=>{
 
-let items=d.items.map(i=>`${i.barang} (${i.jumlah})`).join(", ");
+let items=d.items.map(i=>`• ${i.barang} (${i.jumlah})`).join("<br>");
 
 let div=document.createElement("div");
 div.className="laporan-card";
 
 div.innerHTML=`
 <b>${d.jenis} - ${d.tempat}</b><br>
-<small>${d.waktu}</small><br>
+<small>${d.waktu}</small><br><br>
 ${items}<br>
 ${d.foto?`<img src="${d.foto}">`:""}
 `;
@@ -307,7 +312,6 @@ list.appendChild(div);
 });
 }
 
-// RESET
 function kosongkan(){
 document.querySelectorAll("input[type=number]").forEach(i=>i.value="");
 document.getElementById("foto").value="";
