@@ -67,7 +67,6 @@ margin-bottom:10px;
 font-weight:600;
 }
 
-/* 🔥 PERBAIKAN: angka rata tengah */
 input[type="number"]{
 text-align:center;
 font-size:16px;
@@ -102,11 +101,37 @@ border-radius:10px;
 margin-top:8px;
 }
 
+/* 🔥 LAPORAN STYLE BARU */
 .laporan-card{
 background:white;
-margin-top:10px;
-padding:10px;
-border-radius:10px;
+margin-top:12px;
+padding:12px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.laporan-header{
+font-size:18px;
+font-weight:800;
+color:#1e3a8a;
+margin-bottom:6px;
+}
+
+.laporan-tanggal{
+display:inline-block;
+background:#e0edff;
+color:#1e3a8a;
+padding:4px 10px;
+border-radius:8px;
+font-size:13px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.laporan-items{
+margin-top:6px;
+line-height:1.5;
+font-weight:600;
 }
 </style>
 </head>
@@ -175,6 +200,16 @@ document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
 e.target.classList.add("active");
 
 if(tab==="laporan") loadLaporan();
+}
+
+// FORMAT HARI
+function formatTanggal(waktu){
+let date = new Date(waktu);
+
+let hari = date.toLocaleDateString("id-ID",{weekday:"long"});
+let tanggal = date.toLocaleDateString("id-ID");
+
+return `${hari}, ${tanggal}`;
 }
 
 // PREVIEW
@@ -255,7 +290,7 @@ fotoBase64=await kompresGambar(fotoInput.files[0]);
 }
 
 let data={
-waktu:new Date().toLocaleString("sv-SE",{timeZone:"Asia/Jakarta"}),
+waktu:new Date().toISOString(),
 tempat:tempat,
 jenis:jenis,
 items:items,
@@ -274,7 +309,7 @@ tombol.innerText="Simpan";
 tombol.disabled=false;
 }
 
-// 🔥 PERBAIKAN LAPORAN (ENTER, bukan koma)
+// 🔥 LAPORAN BARU
 function loadLaporan(){
 
 let list=document.getElementById("listLaporan");
@@ -299,9 +334,9 @@ let div=document.createElement("div");
 div.className="laporan-card";
 
 div.innerHTML=`
-<b>${d.jenis} - ${d.tempat}</b><br>
-<small>${d.waktu}</small><br><br>
-${items}<br>
+<div class="laporan-header">${d.jenis} - ${d.tempat}</div>
+<div class="laporan-tanggal">${formatTanggal(d.waktu)}</div>
+<div class="laporan-items">${items}</div>
 ${d.foto?`<img src="${d.foto}">`:""}
 `;
 
