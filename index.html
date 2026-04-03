@@ -115,8 +115,13 @@ background:gray;
 </head>
 
 <body>
+<div class="tabs">
+<button class="tab-btn active" onclick="bukaTab('input')">Input</button>
+<button class="tab-btn" onclick="bukaTab('laporan')">Laporan</button>
+</div>
 
 <div class="container">
+<div id="input" class="tab-content">
 <div class="card">
 
 <h2>Input Jajan</h2>
@@ -183,7 +188,8 @@ background:gray;
 <button id="tombol" onclick="kirim()">Simpan</button>
 
 </div>
-<div class="card" style="margin-top:20px;">
+<div id="laporanTab" class="tab-content" style="display:none;">
+<div class="card">
 <h2>Laporan</h2>
 <div id="laporan"></div>
 </div>
