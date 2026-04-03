@@ -74,18 +74,14 @@ font-size:16px;
 
 .row{
 display:flex;
-gap:8px;
+justify-content:space-between;
 align-items:center;
-margin-bottom:6px;
-}
-
-.row select{
-flex:1;
+border-bottom:1px solid #eee;
+padding:8px 0;
 }
 
 .row input{
-width:90px;
-text-align:center;
+width:80px;
 }
 
 button{
@@ -105,7 +101,7 @@ border-radius:10px;
 margin-top:8px;
 }
 
-/* LAPORAN */
+/* 🔥 LAPORAN STYLE BARU */
 .laporan-card{
 background:white;
 margin-top:12px;
@@ -151,6 +147,7 @@ font-weight:600;
 
 <div class="card">
 
+<!-- INPUT -->
 <div id="inputTab">
 
 <h2>Input Jajan</h2>
@@ -179,11 +176,10 @@ font-weight:600;
 <div class="row"><span>Dimsum Maklor Moci</span><input type="number" id="dimsum_maklor_moci"></div>
 <div class="row"><span>Kebab</span><input type="number" id="kebab"></div>
 <div class="row"><span>Sosis Roti Gurita</span><input type="number" id="sosis_roti_gurita"></div>
-
-<!-- SLOT BEBAS -->
+<!-- SLOT TAMBAHAN -->
 <div class="row">
 <select id="slot1">
-<option value="">-- Pilih Barang --</option>
+<option value="">-- Pilih --</option>
 <option>Tahu Batagor</option>
 <option>Cilok</option>
 <option>Cimol Cireng</option>
@@ -193,12 +189,12 @@ font-weight:600;
 <option>Kebab</option>
 <option>Sosis Roti Gurita</option>
 </select>
-<input type="number" id="slot1_jumlah" placeholder="Qty">
+<input type="number" id="slot1_jumlah">
 </div>
 
 <div class="row">
 <select id="slot2">
-<option value="">-- Pilih Barang --</option>
+<option value="">-- Pilih --</option>
 <option>Tahu Batagor</option>
 <option>Cilok</option>
 <option>Cimol Cireng</option>
@@ -208,13 +204,13 @@ font-weight:600;
 <option>Kebab</option>
 <option>Sosis Roti Gurita</option>
 </select>
-<input type="number" id="slot2_jumlah" placeholder="Qty">
+<input type="number" id="slot2_jumlah">
 </div>
-
 <button id="tombol" onclick="kirim()">Simpan</button>
 
 </div>
 
+<!-- LAPORAN -->
 <div id="laporanTab" style="display:none">
 <h2>Laporan</h2>
 <div id="listLaporan">Loading...</div>
@@ -235,13 +231,17 @@ e.target.classList.add("active");
 if(tab==="laporan") loadLaporan();
 }
 
+// FORMAT HARI
 function formatTanggal(waktu){
 let date = new Date(waktu);
+
 let hari = date.toLocaleDateString("id-ID",{weekday:"long"});
 let tanggal = date.toLocaleDateString("id-ID");
+
 return `${hari}, ${tanggal}`;
 }
 
+// PREVIEW
 document.getElementById("foto").addEventListener("change",function(e){
 let file=e.target.files[0];
 if(!file) return;
@@ -255,6 +255,7 @@ img.style.display="block";
 reader.readAsDataURL(file);
 });
 
+// KOMPRES
 function kompresGambar(file){
 return new Promise(resolve=>{
 let reader=new FileReader();
@@ -280,9 +281,12 @@ reader.readAsDataURL(file);
 });
 }
 
+// KIRIM
 async function kirim(){
 
 let tombol=document.getElementById("tombol");
+if(tombol.disabled) return;
+
 tombol.innerText="Mengirim...";
 tombol.disabled=true;
 
@@ -306,11 +310,11 @@ tambah("Piscok Molen","piscok_molen");
 tambah("Dimsum Maklor Moci","dimsum_maklor_moci");
 tambah("Kebab","kebab");
 tambah("Sosis Roti Gurita","sosis_roti_gurita");
+// SLOT TAMBAHAN
+function tambahSlot(idBarang,idJumlah){
+let barang=document.getElementById(idBarang).value;
+let jumlah=document.getElementById(idJumlah).value;
 
-// SLOT BEBAS
-function tambahSlot(selectId,jumlahId){
-let barang=document.getElementById(selectId).value;
-let jumlah=document.getElementById(jumlahId).value;
 if(barang && jumlah && jumlah!=0){
 items.push({barang:barang,jumlah:jumlah});
 }
@@ -346,6 +350,7 @@ tombol.innerText="Simpan";
 tombol.disabled=false;
 }
 
+// 🔥 LAPORAN BARU
 function loadLaporan(){
 
 let list=document.getElementById("listLaporan");
@@ -384,11 +389,11 @@ list.appendChild(div);
 }
 
 function kosongkan(){
-document.querySelectorAll("input[type=number]").forEach(i=>i.value="");
 document.getElementById("slot1").value="";
 document.getElementById("slot2").value="";
 document.getElementById("slot1_jumlah").value="";
 document.getElementById("slot2_jumlah").value="";
+document.querySelectorAll("input[type=number]").forEach(i=>i.value="");
 document.getElementById("foto").value="";
 document.getElementById("preview").style.display="none";
 }
@@ -400,7 +405,7 @@ document.getElementById("preview").style.display="none";
 
 <script>
 const firebaseConfig={
-apiKey:"AIzaSyAIEhd42LiAEuCzsnTXubQdxH1dzu1nyQ",
+apiKey:"AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
 authDomain:"cilok-86ced.firebaseapp.com",
 databaseURL:"https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
 projectId:"cilok-86ced",
