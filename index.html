@@ -17,7 +17,6 @@ select,input[type="number"]{width:100%;padding:10px;border-radius:10px;border:1p
 .row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding:8px 0;}
 .row input{width:80px;}
 button{width:100%;padding:14px;border:none;border-radius:12px;background:#1e3a8a;color:white;font-weight:700;margin-top:10px;}
-img{width:100%;border-radius:10px;margin-top:8px;}
 .laporan-card{background:white;margin-top:10px;padding:10px;border-radius:10px;}
 </style>
 </head>
@@ -35,7 +34,6 @@ img{width:100%;border-radius:10px;margin-top:8px;}
 
 <!-- INPUT -->
 <div id="inputTab">
-
 <h2>Input Jajan</h2>
 
 <div id="loginArea">
@@ -61,7 +59,6 @@ img{width:100%;border-radius:10px;margin-top:8px;}
 
 <button onclick="kirim()">Simpan</button>
 </div>
-
 </div>
 
 <!-- LAPORAN -->
@@ -73,7 +70,23 @@ img{width:100%;border-radius:10px;margin-top:8px;}
 </div>
 </div>
 
+<!-- FIREBASE (HARUS DI ATAS SCRIPT UTAMA) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
 <script>
+
+// INIT FIREBASE
+const firebaseConfig={
+apiKey:"AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
+authDomain:"cilok-86ced.firebaseapp.com",
+databaseURL:"https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"cilok-86ced"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
 
 const ADMIN_EMAIL = "noor.jadzil@gmail.com";
 
@@ -88,33 +101,30 @@ e.target.classList.add("active");
 if(tab==="laporan") loadLaporan();
 }
 
-// LOGIN (FIX REDIRECT)
+// LOGIN (REDIRECT)
 function login(){
 const provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().signInWithRedirect(provider);
 }
 
-// HANDLE REDIRECT RESULT
+// HANDLE REDIRECT (PINDAH KE SINI BIAR AMAN)
 firebase.auth().getRedirectResult()
 .then(result=>{
 if(result.user){
 console.log("Login sukses:", result.user.email);
 }
 }).catch(err=>{
-console.error("Error login:", err);
+alert("Error login: " + err.message);
 });
 
-// LOGOUT
-function logout(){
-firebase.auth().signOut();
-}
-
-// PERSISTENT LOGIN
+// SIMPAN LOGIN
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-// CEK LOGIN
+// CEK USER
 firebase.auth().onAuthStateChanged(user=>{
-if(user && user.email===ADMIN_EMAIL){
+console.log("User:", user);
+
+if(user && user.email === ADMIN_EMAIL){
 document.getElementById("loginArea").style.display="none";
 document.getElementById("formArea").style.display="block";
 }else{
@@ -122,6 +132,11 @@ document.getElementById("loginArea").style.display="block";
 document.getElementById("formArea").style.display="none";
 }
 });
+
+// LOGOUT
+function logout(){
+firebase.auth().signOut();
+}
 
 // KIRIM
 function kirim(){
@@ -177,22 +192,6 @@ list.appendChild(div);
 });
 }
 
-</script>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-
-<script>
-const firebaseConfig={
-apiKey:"AIzaSyAIEhd42LiAEu7CzsnTXubQdxH1dzu1nyQ",
-authDomain:"cilok-86ced.firebaseapp.com",
-databaseURL:"https://cilok-86ced-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId:"cilok-86ced"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
 </script>
 
 </body>
