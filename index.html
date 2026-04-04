@@ -206,6 +206,8 @@ font-weight:600;
 </select>
 <input type="number" id="slot2_jumlah">
 </div>
+<label>Catatan</label>
+<input type="text" id="catatan" placeholder="Tulis catatan...">
 <button id="tombol" onclick="kirim()">Simpan</button>
 
 </div>
@@ -324,6 +326,7 @@ items.push({barang:barang,jumlah:jumlah});
 
 tambahSlot("slot1","slot1_jumlah");
 tambahSlot("slot2","slot2_jumlah");
+let catatan=document.getElementById("catatan").value;
 
 let fotoBase64="";
 let fotoInput=document.getElementById("foto");
@@ -333,11 +336,12 @@ fotoBase64=await kompresGambar(fotoInput.files[0]);
 }
 
 let data={
-waktu:new Date().toISOString(),
-tempat:tempat,
-jenis:jenis,
-items:items,
-foto:fotoBase64
+  waktu:new Date().toISOString(),
+  tempat:tempat,
+  jenis:jenis,
+  items:items,
+  foto:fotoBase64,
+  catatan:catatan
 };
 
 try{
@@ -380,6 +384,13 @@ div.innerHTML=`
 <div class="laporan-header">${d.jenis} - ${d.tempat}</div>
 <div class="laporan-tanggal">${formatTanggal(d.waktu)}</div>
 <div class="laporan-items">${items}</div>
+
+${d.catatan ? `
+<div style="margin-top:8px;font-weight:700;color:#1e3a8a">
+Catatan: ${d.catatan}
+</div>
+` : ""}
+
 ${d.foto?`<img src="${d.foto}">`:""}
 `;
 
@@ -398,6 +409,7 @@ document.getElementById("slot2_jumlah").value="";
 document.querySelectorAll("input[type=number]").forEach(i=>i.value="");
 document.getElementById("foto").value="";
 document.getElementById("preview").style.display="none";
+document.getElementById("catatan").value="";
 }
 
 </script>
