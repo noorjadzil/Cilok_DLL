@@ -357,7 +357,7 @@ fotoBase64=await kompresGambar(fotoInput.files[0]);
 }
 
 let data={
-  waktu:new Date().toLocaleString("id-ID"),
+  waktu:new Date().toISOString(),
   tempat:tempat,
   jenis:jenis,
   items:items,
