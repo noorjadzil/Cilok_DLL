@@ -396,7 +396,9 @@ let arr=Object.values(snap.val()).reverse();
 
 arr.forEach(d=>{
 
-let items=d.items.map(i=>`• ${i.barang} (${i.jumlah})`).join("<br>");
+let items = (d.items || [])
+.map(i=>`• ${i.barang} (${i.jumlah})`)
+.join("<br>");
 
 let div=document.createElement("div");
 div.className="laporan-card";
