@@ -164,15 +164,6 @@ flex:1;
 text-align:center;
 }
 
-.item-row button{
-width:50px;
-padding:0;
-height:52px;
-border-radius:16px;
-background:#ef4444;
-font-size:20px;
-}
-
 button{
 width:100%;
 padding:16px;
@@ -191,26 +182,14 @@ background:linear-gradient(135deg,#2563eb,#06b6d4);
 box-shadow:0 10px 30px rgba(37,99,235,0.35);
 }
 
-.primary-btn:hover{
-transform:translateY(-2px) scale(1.01);
-}
-
 .secondary-btn{
 background:rgba(255,255,255,0.06);
 border:1px solid rgba(255,255,255,0.08);
 }
 
-.secondary-btn:hover{
-background:rgba(255,255,255,0.1);
-}
-
 .add-btn{
 background:rgba(255,255,255,0.08);
 border:1px dashed rgba(255,255,255,0.2);
-}
-
-.add-btn:hover{
-background:rgba(255,255,255,0.12);
 }
 
 img{
@@ -274,16 +253,16 @@ color:#64748b;
 
 <div class="input-group">
 <label>Lokasi</label>
-<select id="tempat">
-<option>Akhwat</option>
+<select id="tempat" disabled>
+<option selected>Akhwat</option>
 </select>
 </div>
 
 <div class="section-title">Input Item</div>
 
-<div id="dynamicItems"></div>
+<div id="itemsContainer"></div>
 
-<button class="add-btn" onclick="tambahItem()">
+<button class="add-btn" onclick="tambahDropdown()">
 ＋ Tambah Item
 </button>
 
@@ -344,20 +323,7 @@ reader.readAsDataURL(file);
 
 });
 
-// FORMAT TANGGAL
-function formatTanggal(){
-
-let hari=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
-
-let bulan=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-
-let d=new Date();
-
-return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]}`;
-
-}
-
-// LOAD ITEM
+// LOAD ITEMS
 function loadItems(){
 
 db.ref("items").once("value",snap=>{
@@ -374,22 +340,31 @@ daftarItems.push(nama);
 
 });
 
-tambahItem();
+let container=document.getElementById("itemsContainer");
+
+container.innerHTML="";
+
+// LANGSUNG 8 DROPDOWN
+for(let i=0;i<8;i++){
+
+tambahDropdown();
+
+}
 
 });
 
 }
 
-// TAMBAH ITEM
-function tambahItem(){
+// TAMBAH DROPDOWN
+function tambahDropdown(){
 
-let container=document.getElementById("dynamicItems");
+let container=document.getElementById("itemsContainer");
 
 let div=document.createElement("div");
 
 div.className="item-row";
 
-let options='<option value="">Tambah Item</option>';
+let options='<option value="">Pilih Item</option>';
 
 daftarItems.forEach(item=>{
 
@@ -403,20 +378,14 @@ div.innerHTML=`
 ${options}
 </select>
 
-<input type="number" class="jumlah" placeholder="0">
-
-<button onclick="hapusItem(this)">×</button>
+<input 
+type="number"
+class="jumlah"
+placeholder="0">
 
 `;
 
 container.appendChild(div);
-
-}
-
-// HAPUS ITEM
-function hapusItem(btn){
-
-btn.parentElement.remove();
 
 }
 
@@ -464,11 +433,25 @@ container.innerHTML="Belum ada nomor";
 
 }
 
+// FORMAT TANGGAL
+function formatTanggal(){
+
+let hari=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+
+let bulan=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+let d=new Date();
+
+return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]}`;
+
+}
+
 // SIMPAN
 async function kirim(){
 
 let items=[];
 
+// ITEM
 document.querySelectorAll(".item-row").forEach(row=>{
 
 let barang=row.querySelector(".barang").value;
