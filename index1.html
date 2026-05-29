@@ -303,6 +303,14 @@ color:#64748b;
 </select>
 </div>
 
+<div class="input-group">
+<label>Waktu</label>
+<select id="sesi">
+<option value="Pagi">Pagi</option>
+<option value="Malam">Malam</option>
+</select>
+</div>
+
 <div class="section-title">Input Item</div>
 
 <div id="itemsContainer"></div>
@@ -443,10 +451,21 @@ let container=document.getElementById("itemsContainer");
 
 container.innerHTML="";
 
-// LANGSUNG 8 DROPDOWN
+// ITEM LANGSUNG PER BARIS
+let itemDefault=[
+"",
+"Tahu",
+"",
+"Batagor",
+"",
+"",
+"",
+""
+];
+
 for(let i=0;i<8;i++){
 
-tambahDropdown();
+tambahDropdown(itemDefault[i]);
 
 }
 
@@ -455,7 +474,7 @@ tambahDropdown();
 }
 
 // TAMBAH DROPDOWN
-function tambahDropdown(){
+function tambahDropdown(defaultItem=""){
 
 let container=document.getElementById("itemsContainer");
 
@@ -465,9 +484,15 @@ div.className="item-row";
 
 let options='<option value="">Pilih Item</option>';
 
+if(defaultItem && !daftarItems.includes(defaultItem)){
+options += `<option value="${defaultItem}" selected>${defaultItem}</option>`;
+}
+
 daftarItems.forEach(item=>{
 
-options += `<option value="${item}">${item}</option>`;
+let selected=item===defaultItem ? "selected" : "";
+
+options += `<option value="${item}" ${selected}>${item}</option>`;
 
 });
 
@@ -492,13 +517,13 @@ container.appendChild(div);
 // FORMAT TANGGAL
 function formatTanggal(){
 
-let hari=["Ahad","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+let hari=["Ahad","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu"];
 
 let bulan=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 
 let d=new Date();
 
-return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+return `${hari[d.getDay()]} ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
 
 }
 
@@ -525,11 +550,6 @@ jumlah:Number(jumlah)
 
 });
 
-if(items.length===0){
-showToast("Isi minimal 1 item dulu");
-return;
-}
-
 // FOTO
 let fotoBase64=fotoBase64Final;
 
@@ -550,6 +570,8 @@ waktu:new Date().toISOString(),
 
 tempat:document.getElementById("tempat").value,
 
+sesi:document.getElementById("sesi").value,
+
 jenis:document.getElementById("jenis").value,
 
 items:items,
@@ -562,7 +584,7 @@ foto:fotoBase64
 
 await db.ref("jajan").push(data);
 
-let teks=formatTanggal()+"\n";
+let teks=`${formatTanggal()} - ${data.sesi}\n`;
 teks += `${data.jenis} - ${data.tempat}\n\n`;
 
 data.items.forEach(i=>{
