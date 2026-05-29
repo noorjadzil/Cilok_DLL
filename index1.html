@@ -377,7 +377,16 @@ cropper=new Cropper(preview,{
 aspectRatio:NaN,
 viewMode:1,
 autoCropArea:1,
-background:false
+background:false,
+dragMode:"move",
+cropBoxMovable:true,
+cropBoxResizable:true,
+toggleDragModeOnDblclick:false,
+responsive:true,
+restore:false,
+guides:true,
+center:true,
+highlight:true
 });
 
 };
@@ -489,7 +498,7 @@ let bulan=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","S
 
 let d=new Date();
 
-return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]}`;
+return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
 
 }
 
@@ -567,8 +576,6 @@ if(data.catatan){
 teks += `\nCatatan:\n${data.catatan}\n`;
 
 }
-
-teks += "\n— MAQSHOF —";
 
 // LANGSUNG SHARE KE WHATSAPP / PILIH APLIKASI
 if(navigator.share){
