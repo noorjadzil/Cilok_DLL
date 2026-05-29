@@ -7,6 +7,7 @@
 <title>MAQSHOF</title>
 
 <link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
 
 <style>
 
@@ -200,12 +201,51 @@ display:none;
 border:1px solid rgba(255,255,255,0.08);
 }
 
-#pilihWA .wa-row{
-padding:14px;
-margin-bottom:10px;
-border-radius:18px;
-background:rgba(255,255,255,0.04);
-border:1px solid rgba(255,255,255,0.06);
+.crop-area{
+display:none;
+margin-top:12px;
+}
+
+.crop-area img{
+display:block;
+max-height:360px;
+object-fit:contain;
+}
+
+.small-btn{
+background:linear-gradient(135deg,#16a34a,#22c55e);
+box-shadow:0 10px 30px rgba(22,163,74,0.25);
+}
+
+.info{
+font-size:12px;
+color:#94a3b8;
+line-height:1.5;
+margin-top:6px;
+}
+
+.toast{
+position:fixed;
+left:50%;
+bottom:24px;
+transform:translateX(-50%) translateY(20px);
+background:rgba(15,23,42,0.92);
+border:1px solid rgba(255,255,255,0.12);
+color:white;
+padding:13px 16px;
+border-radius:16px;
+box-shadow:0 14px 40px rgba(0,0,0,0.35);
+opacity:0;
+pointer-events:none;
+transition:0.25s;
+z-index:99;
+font-size:14px;
+font-weight:700;
+}
+
+.toast.show{
+opacity:1;
+transform:translateX(-50%) translateY(0);
 }
 
 .footer{
@@ -237,8 +277,13 @@ color:#64748b;
 
 <div class="input-group">
 <label>Foto</label>
-<input type="file" id="foto" accept="image/*">
+<input type="file" id="foto" accept="image/*" capture="environment">
+<div class="info">Ambil foto langsung dari kamera, lalu bisa dipotong agar pas.</div>
+
+<div class="crop-area" id="cropArea">
 <img id="preview">
+<button class="small-btn" type="button" onclick="pakaiHasilCrop()">✅ Pakai Foto Ini</button>
+</div>
 </div>
 
 <div class="section-title">Informasi</div>
@@ -272,12 +317,8 @@ color:#64748b;
 <textarea id="catatan" placeholder="Tambahkan catatan tambahan..."></textarea>
 </div>
 
-<div class="section-title">WhatsApp</div>
-
-<div id="pilihWA"></div>
-
 <button class="primary-btn" onclick="kirim()">
-💾 Simpan Data
+💾 Simpan & Kirim WhatsApp
 </button>
 
 <button class="secondary-btn" onclick="location.href='laporan.html'">
@@ -296,32 +337,75 @@ MAQSHOF • Modern Dashboard System
 
 </div>
 
+<div class="toast" id="toast">Berhasil</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+
 <script>
 
 let daftarItems=[];
+let cropper=null;
+let fotoBase64Final="";
 
-// PREVIEW FOTO
+// TOAST
+function showToast(teks){
+let toast=document.getElementById("toast");
+toast.textContent=teks;
+toast.classList.add("show");
+setTimeout(()=>toast.classList.remove("show"),2200);
+}
+
+// PREVIEW FOTO + CROP
 document.getElementById("foto").addEventListener("change",function(){
 
 let file=this.files[0];
-
 if(!file) return;
 
 let reader=new FileReader();
 
 reader.onload=e=>{
 
-let img=document.getElementById("preview");
+let preview=document.getElementById("preview");
+preview.src=e.target.result;
+document.getElementById("cropArea").style.display="block";
 
-img.src=e.target.result;
+if(cropper){
+cropper.destroy();
+}
 
-img.style.display="block";
+cropper=new Cropper(preview,{
+aspectRatio:NaN,
+viewMode:1,
+autoCropArea:1,
+background:false
+});
 
 };
 
 reader.readAsDataURL(file);
 
 });
+
+function pakaiHasilCrop(){
+
+if(!cropper) return;
+
+let canvas=cropper.getCroppedCanvas({
+width:600,
+imageSmoothingQuality:"high"
+});
+
+fotoBase64Final=canvas.toDataURL("image/jpeg",0.6);
+
+let preview=document.getElementById("preview");
+preview.src=fotoBase64Final;
+
+cropper.destroy();
+cropper=null;
+
+showToast("Foto siap digunakan");
+
+}
 
 // LOAD ITEMS
 function loadItems(){
@@ -330,15 +414,21 @@ db.ref("items").once("value",snap=>{
 
 daftarItems=[];
 
+let dataItems=[];
+
 snap.forEach(c=>{
 
 let data=c.val();
-
 let nama=data.nama || data;
+let urutan=data.urutan || 9999;
 
-daftarItems.push(nama);
+dataItems.push({nama,urutan});
 
 });
+
+dataItems.sort((a,b)=>a.urutan-b.urutan);
+
+daftarItems=dataItems.map(i=>i.nama);
 
 let container=document.getElementById("itemsContainer");
 
@@ -381,62 +471,19 @@ ${options}
 <input 
 type="number"
 class="jumlah"
-placeholder="0">
+placeholder="0"
+inputmode="numeric">
 
 `;
 
 container.appendChild(div);
-
-}
-
-// LOAD WA
-function loadWAOptions(){
-
-let container=document.getElementById("pilihWA");
-
-container.innerHTML="Loading...";
-
-db.ref("config/wa").once("value",snap=>{
-
-let wa=snap.val() || {};
-
-container.innerHTML="";
-
-for(let i=1;i<=4;i++){
-
-if(wa["wa"+i]){
-
-let div=document.createElement("div");
-
-div.className="wa-row";
-
-div.innerHTML=`
-
-<label>
-<input type="radio" name="wa" value="${wa["wa"+i]}">
-${wa["wa"+i]}
-</label>
-
-`;
-
-container.appendChild(div);
-
-}
-
-}
-
-if(container.innerHTML===""){
-container.innerHTML="Belum ada nomor";
-}
-
-});
 
 }
 
 // FORMAT TANGGAL
 function formatTanggal(){
 
-let hari=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+let hari=["Ahad","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
 
 let bulan=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 
@@ -469,13 +516,22 @@ jumlah:Number(jumlah)
 
 });
 
+if(items.length===0){
+showToast("Isi minimal 1 item dulu");
+return;
+}
+
 // FOTO
-let fotoBase64="";
+let fotoBase64=fotoBase64Final;
+
+if(!fotoBase64){
 
 let f=document.getElementById("foto").files[0];
 
 if(f){
 fotoBase64=await kompresGambar(f);
+}
+
 }
 
 // DATA
@@ -497,13 +553,7 @@ foto:fotoBase64
 
 await db.ref("jajan").push(data);
 
-// AUTO WA
-let selected=document.querySelector('input[name="wa"]:checked');
-
-if(selected){
-
 let teks=formatTanggal()+"\n";
-
 teks += `${data.jenis} - ${data.tempat}\n\n`;
 
 data.items.forEach(i=>{
@@ -514,19 +564,51 @@ teks += `${i.barang} : ${i.jumlah}\n`;
 
 if(data.catatan){
 
-teks += `\nCatatan:\n${data.catatan}`;
+teks += `\nCatatan:\n${data.catatan}\n`;
 
 }
 
-let url=`https://wa.me/${selected.value}?text=${encodeURIComponent(teks)}`;
+teks += "\n— MAQSHOF —";
+
+// LANGSUNG SHARE KE WHATSAPP / PILIH APLIKASI
+if(navigator.share){
+
+try{
+
+let shareData={
+title:"Laporan MAQSHOF",
+text:teks
+};
+
+if(fotoBase64){
+
+let fileFoto=dataURLtoFile(fotoBase64,"foto-maqshof.jpg");
+
+if(navigator.canShare && navigator.canShare({files:[fileFoto]})){
+shareData.files=[fileFoto];
+}
+
+}
+
+await navigator.share(shareData);
+
+}catch(err){
+console.log("Share dibatalkan",err);
+}
+
+}else{
+
+let url=`https://wa.me/?text=${encodeURIComponent(teks)}`;
 
 window.open(url,"_blank");
 
 }
 
-alert("Data berhasil disimpan");
+showToast("Data berhasil disimpan");
 
+setTimeout(()=>{
 location.reload();
+},700);
 
 }
 
@@ -547,9 +629,10 @@ img.onload=()=>{
 
 let canvas=document.createElement("canvas");
 
-let scale=500/img.width;
+let lebar=400;
+let scale=lebar/img.width;
 
-canvas.width=500;
+canvas.width=lebar;
 
 canvas.height=img.height*scale;
 
@@ -557,7 +640,7 @@ let ctx=canvas.getContext("2d");
 
 ctx.drawImage(img,0,0,canvas.width,canvas.height);
 
-resolve(canvas.toDataURL("image/jpeg",0.6));
+resolve(canvas.toDataURL("image/jpeg",0.5));
 
 };
 
@@ -566,6 +649,22 @@ resolve(canvas.toDataURL("image/jpeg",0.6));
 reader.readAsDataURL(file);
 
 });
+
+}
+
+function dataURLtoFile(dataurl, filename){
+
+let arr=dataurl.split(",");
+let mime=arr[0].match(/:(.*?);/)[1];
+let bstr=atob(arr[1]);
+let n=bstr.length;
+let u8arr=new Uint8Array(n);
+
+while(n--){
+u8arr[n]=bstr.charCodeAt(n);
+}
+
+return new File([u8arr],filename,{type:mime});
 
 }
 
@@ -588,8 +687,6 @@ const db=firebase.database();
 window.onload=function(){
 
 loadItems();
-
-loadWAOptions();
 
 }
 
