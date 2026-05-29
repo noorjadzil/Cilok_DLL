@@ -4,18 +4,11 @@
 <title>Laporan Jajan</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#0f172a">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
 font-family:'Segoe UI',sans-serif;
@@ -23,10 +16,8 @@ background:#020617;
 min-height:100vh;
 color:white;
 overflow-x:hidden;
-padding:14px;
+padding:10px;
 }
-
-/* BACKGROUND */
 
 .bg{
 position:fixed;
@@ -38,8 +29,7 @@ linear-gradient(135deg,#020617,#0f172a,#111827);
 z-index:-3;
 }
 
-.glow1,
-.glow2{
+.glow1,.glow2{
 position:fixed;
 border-radius:50%;
 filter:blur(100px);
@@ -62,47 +52,32 @@ bottom:-80px;
 right:-80px;
 }
 
-/* CONTAINER */
-
 .container{
-max-width:500px;
+width:100%;
+max-width:520px;
 margin:auto;
 }
 
-/* CARD */
-
 .card{
+width:100%;
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(24px);
 border:1px solid rgba(255,255,255,0.08);
-border-radius:30px;
-padding:20px;
-box-shadow:
-0 15px 45px rgba(0,0,0,0.45),
-inset 0 1px 0 rgba(255,255,255,0.05);
+border-radius:28px;
+padding:14px;
+box-shadow:0 15px 45px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.05);
 }
-
-/* TITLE */
 
 h2{
 text-align:center;
-font-size:32px;
+font-size:30px;
 font-weight:900;
 margin-bottom:18px;
 letter-spacing:1px;
-
-background:linear-gradient(
-90deg,
-#ffffff,
-#7dd3fc,
-#22d3ee
-);
-
+background:linear-gradient(90deg,#ffffff,#7dd3fc,#22d3ee);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
-
-/* BUTTON */
 
 .main-btn{
 width:100%;
@@ -115,24 +90,12 @@ cursor:pointer;
 transition:0.25s;
 color:white;
 margin-bottom:14px;
-
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,0.07),
-rgba(255,255,255,0.03)
-);
-
+background:linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03));
 border:1px solid rgba(255,255,255,0.08);
-
 backdrop-filter:blur(10px);
 }
 
-.main-btn:active{
-transform:scale(0.98);
-}
-
-/* TAB */
+.main-btn:active{transform:scale(0.98)}
 
 .tab-wrap{
 display:flex;
@@ -154,9 +117,7 @@ color:white;
 
 .active{
 background:linear-gradient(135deg,#2563eb,#06b6d4);
-
-box-shadow:
-0 12px 30px rgba(37,99,235,0.35);
+box-shadow:0 12px 30px rgba(37,99,235,0.35);
 }
 
 .nonactive{
@@ -164,38 +125,23 @@ background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.08);
 }
 
-/* LAPORAN CARD */
-
 .laporan-card{
-margin-top:16px;
-
-background:
-linear-gradient(
-180deg,
-rgba(255,255,255,0.07),
-rgba(255,255,255,0.04)
-);
-
+width:100%;
+margin-top:14px;
+background:linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.04));
 border:1px solid rgba(255,255,255,0.08);
-
-border-radius:28px;
-
-padding:18px;
-
+border-radius:24px;
+padding:16px;
 backdrop-filter:blur(20px);
-
-box-shadow:
-0 12px 35px rgba(0,0,0,0.30),
-inset 0 1px 0 rgba(255,255,255,0.05);
+box-shadow:0 12px 35px rgba(0,0,0,0.30),inset 0 1px 0 rgba(255,255,255,0.05);
 }
-
-/* HEADER */
 
 .laporan-header{
 display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:14px;
+gap:10px;
 }
 
 .header-left{
@@ -217,48 +163,39 @@ font-weight:700;
 color:#fca5a5;
 }
 
-.edit-btn{
+.action-wrap{
+display:flex;
+gap:8px;
+}
+
+.edit-btn,.delete-btn{
 width:42px;
 height:42px;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
 border-radius:16px;
-
 background:rgba(255,255,255,0.06);
-
 border:1px solid rgba(255,255,255,0.08);
-
 font-size:16px;
-
 cursor:pointer;
+color:white;
 }
 
-/* TANGGAL */
+.delete-btn{
+background:rgba(239,68,68,0.12);
+border:1px solid rgba(239,68,68,0.22);
+}
 
 .laporan-tanggal{
-
 display:flex;
 align-items:center;
 gap:10px;
-
-padding:12px 16px;
-
-border-radius:20px;
-
+padding:12px 14px;
+border-radius:18px;
 margin-bottom:14px;
-
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,0.07),
-rgba(255,255,255,0.03)
-);
-
+background:linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03));
 border:1px solid rgba(255,255,255,0.08);
-
 backdrop-filter:blur(12px);
 }
 
@@ -278,8 +215,6 @@ letter-spacing:0.2px;
 color:#e2e8f0;
 }
 
-/* ITEMS */
-
 .laporan-items{
 display:flex;
 flex-direction:column;
@@ -291,15 +226,8 @@ margin-top:-2px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-
-padding:6px 0;
-
-border:none;
-background:none;
-border-radius:0;
-
-border-bottom:
-1px solid rgba(255,255,255,0.05);
+padding:7px 0;
+border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
 .item-left{
@@ -323,47 +251,28 @@ color:#f8fafc;
 }
 
 .item-jumlah{
-
 min-width:44px;
-
 padding:7px 12px;
-
 border-radius:999px;
-
 text-align:center;
-
 font-size:13px;
 font-weight:900;
-
 background:rgba(255,255,255,0.08);
-
 border:1px solid rgba(255,255,255,0.08);
-
 color:#ffffff;
 }
 
-/* CATATAN */
-
 .note-box{
 margin-top:14px;
-
 padding:14px;
-
 border-radius:18px;
-
 background:rgba(239,68,68,0.08);
-
 border:1px solid rgba(239,68,68,0.15);
-
 font-size:14px;
 font-weight:700;
-
 line-height:1.5;
-
 color:#fecaca;
 }
-
-/* IMAGE */
 
 img{
 width:100%;
@@ -372,22 +281,15 @@ border-radius:22px;
 border:1px solid rgba(255,255,255,0.08);
 }
 
-/* EDIT */
-
 .edit-box{
 margin-top:14px;
-
 padding:14px;
-
 border-radius:22px;
-
 background:rgba(255,255,255,0.04);
-
 border:1px solid rgba(255,255,255,0.08);
 }
 
-.input,
-.small-input{
+.input,.small-input,.select-input{
 background:rgba(255,255,255,0.06);
 border:1px solid rgba(255,255,255,0.08);
 border-radius:16px;
@@ -402,8 +304,17 @@ margin-top:8px;
 margin-bottom:14px;
 }
 
+.select-input{
+width:100%;
+}
+
+.select-input option{
+background:#0f172a;
+color:white;
+}
+
 .small-input{
-width:90px;
+width:82px;
 text-align:center;
 }
 
@@ -415,52 +326,57 @@ margin-bottom:10px;
 gap:10px;
 }
 
-.save-btn{
+.item-row-left{
+flex:1;
+}
+
+.remove-row-btn{
+width:40px;
+height:40px;
+border:none;
+border-radius:14px;
+background:rgba(239,68,68,0.14);
+border:1px solid rgba(239,68,68,0.22);
+color:white;
+font-weight:900;
+cursor:pointer;
+}
+
+.add-btn,.save-btn,.history-btn{
 width:100%;
-padding:15px;
+padding:14px;
 border:none;
 border-radius:18px;
 font-weight:900;
 color:white;
 margin-top:10px;
 cursor:pointer;
+}
 
+.add-btn{
+background:rgba(255,255,255,0.06);
+border:1px dashed rgba(255,255,255,0.20);
+}
+
+.save-btn{
 background:linear-gradient(135deg,#2563eb,#06b6d4);
 }
 
 .history-btn{
-width:100%;
-padding:14px;
-border:none;
-border-radius:18px;
-font-weight:800;
-color:white;
-margin-top:10px;
-cursor:pointer;
-
 background:rgba(255,255,255,0.06);
-
 border:1px solid rgba(255,255,255,0.08);
 }
 
 .history-box{
 margin-top:10px;
-
 padding:14px;
-
 border-radius:18px;
-
 background:rgba(255,255,255,0.04);
-
 border:1px solid rgba(255,255,255,0.08);
-
 font-size:13px;
 line-height:1.6;
-
 color:#cbd5e1;
 }
-
-/* LOADING */
 
 .loading{
 text-align:center;
@@ -469,335 +385,317 @@ font-weight:800;
 color:#94a3b8;
 }
 
+.modal-wrap{
+position:fixed;
+inset:0;
+background:rgba(2,6,23,0.72);
+backdrop-filter:blur(10px);
+display:none;
+align-items:center;
+justify-content:center;
+padding:18px;
+z-index:9999;
+}
+
+.modal-box{
+width:100%;
+max-width:360px;
+background:linear-gradient(180deg,rgba(15,23,42,0.98),rgba(30,41,59,0.98));
+border:1px solid rgba(255,255,255,0.10);
+border-radius:26px;
+padding:20px;
+box-shadow:0 25px 70px rgba(0,0,0,0.55);
+}
+
+.modal-title{
+font-size:21px;
+font-weight:900;
+margin-bottom:8px;
+}
+
+.modal-text{
+font-size:14px;
+line-height:1.5;
+color:#cbd5e1;
+margin-bottom:18px;
+}
+
+.modal-actions{
+display:flex;
+gap:10px;
+}
+
+.cancel-btn,.confirm-btn{
+flex:1;
+padding:14px;
+border:none;
+border-radius:18px;
+font-weight:900;
+color:white;
+cursor:pointer;
+}
+
+.cancel-btn{
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.10);
+}
+
+.confirm-btn{
+background:linear-gradient(135deg,#ef4444,#f97316);
+}
+
+.toast{
+position:fixed;
+left:50%;
+bottom:22px;
+transform:translateX(-50%);
+background:rgba(15,23,42,0.96);
+border:1px solid rgba(255,255,255,0.12);
+padding:13px 18px;
+border-radius:18px;
+font-weight:800;
+box-shadow:0 15px 35px rgba(0,0,0,0.45);
+display:none;
+z-index:10000;
+}
+
+@media(max-width:430px){
+body{padding:8px}
+.card{padding:12px;border-radius:24px}
+.laporan-card{padding:14px;border-radius:22px}
+h2{font-size:28px}
+}
 </style>
 </head>
 
 <body>
 
 <div class="bg"></div>
-
 <div class="glow1"></div>
 <div class="glow2"></div>
 
 <div class="container">
-
 <div class="card">
 
 <h2>Laporan Jajan</h2>
 
-<button onclick="kembali()" class="main-btn">
-⬅️ Kembali ke Input
-</button>
+<button onclick="kembali()" class="main-btn">⬅️ Kembali ke Input</button>
 
 <div class="tab-wrap">
-
-<button
-id="btnLaporan"
-class="tab-btn active"
-onclick="showTab('laporan')">
-
-📋 Laporan
-
-</button>
-
-<button
-id="btnRekap"
-class="tab-btn nonactive"
-onclick="showTab('rekap')">
-
-📊 Rekap
-
-</button>
-
+<button id="btnLaporan" class="tab-btn active" onclick="showTab('laporan')">📋 Laporan</button>
+<button id="btnRekap" class="tab-btn nonactive" onclick="showTab('rekap')">📊 Rekap</button>
 </div>
 
 <div id="tabLaporan">
-
-<div id="listLaporan" class="loading">
-Loading...
-</div>
-
+<div id="listLaporan" class="loading">Loading...</div>
 </div>
 
 <div id="tabRekap" style="display:none">
-
-<div id="rekapHarian" class="loading">
-Loading...
-</div>
-
+<div id="rekapHarian" class="loading">Loading...</div>
 </div>
 
 </div>
 </div>
+
+<div id="deleteModal" class="modal-wrap">
+<div class="modal-box">
+<div class="modal-title">Hapus transaksi?</div>
+<div class="modal-text">
+Data transaksi ini akan dihapus permanen dari Firebase. Tindakan ini tidak bisa dibatalkan.
+</div>
+<div class="modal-actions">
+<button class="cancel-btn" onclick="closeDeleteModal()">Batal</button>
+<button class="confirm-btn" onclick="hapusTransaksi()">Hapus</button>
+</div>
+</div>
+</div>
+
+<div id="toast" class="toast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-
-// NAV
 function kembali(){
 window.location.href="index.html";
 }
 
-// TAB
 function showTab(tab){
-
 const laporan=document.getElementById("tabLaporan");
 const rekap=document.getElementById("tabRekap");
-
 const btnLaporan=document.getElementById("btnLaporan");
 const btnRekap=document.getElementById("btnRekap");
 
 if(tab==="laporan"){
-
 laporan.style.display="block";
 rekap.style.display="none";
-
 btnLaporan.className="tab-btn active";
 btnRekap.className="tab-btn nonactive";
-
 }else{
-
 laporan.style.display="none";
 rekap.style.display="block";
-
 btnLaporan.className="tab-btn nonactive";
 btnRekap.className="tab-btn active";
-
 }
 }
 
-// FIREBASE
 firebase.initializeApp({
 databaseURL:"https://maqshof-d5772-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
 
 const db=firebase.database();
 
-// FORMAT
+let masterItems=[];
+let deleteKey=null;
+
+function toast(pesan){
+let t=document.getElementById("toast");
+t.innerText=pesan;
+t.style.display="block";
+setTimeout(()=>{t.style.display="none"},2200);
+}
+
 function formatTanggal(waktu){
-
 let date=new Date(waktu);
-
-let hari=date.toLocaleDateString("id-ID",{
-weekday:"long"
-});
-
-let tanggal=date.toLocaleDateString("id-ID",{
-day:"numeric",
-month:"long",
-year:"numeric"
-});
-
-let jam=date.toLocaleTimeString("id-ID",{
-hour:"2-digit",
-minute:"2-digit"
-});
-
+let hari=date.toLocaleDateString("id-ID",{weekday:"long"});
+let tanggal=date.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+let jam=date.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});
 return `${hari} • ${tanggal} • ${jam}`;
 }
 
 function formatTanggalHari(waktu){
-
 let date=new Date(waktu);
-
-let hari=date.toLocaleDateString("id-ID",{
-weekday:"long"
-});
-
-let tanggal=date.toLocaleDateString("id-ID",{
-day:"numeric",
-month:"long",
-year:"numeric"
-});
-
+let hari=date.toLocaleDateString("id-ID",{weekday:"long"});
+let tanggal=date.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
 return `${hari}, ${tanggal}`;
 }
 
-// LOAD LAPORAN
+function loadMasterItems(callback){
+db.ref("items").once("value",snap=>{
+masterItems=[];
+if(snap.exists()){
+snap.forEach(c=>{
+let d=c.val();
+masterItems.push({
+nama:d.nama || d.barang || "",
+harga:Number(d.harga || 0)
+});
+});
+}
+if(callback) callback();
+});
+}
+
+function optionItems(selected){
+let html=`<option value="">Pilih item</option>`;
+masterItems.forEach(i=>{
+let pilih=i.nama===selected ? "selected" : "";
+html+=`<option value="${i.nama}" ${pilih}>${i.nama}</option>`;
+});
+html+=`<option value="__manual__">+ Item manual</option>`;
+return html;
+}
+
 function loadLaporan(){
-
 let list=document.getElementById("listLaporan");
-
 list.innerHTML=`<div class="loading">Loading...</div>`;
 
 db.ref("jajan").limitToLast(50).once("value",snap=>{
-
 list.innerHTML="";
 
 if(!snap.exists()){
-
 list.innerHTML=`<div class="loading">Belum ada data</div>`;
 return;
-
 }
 
 let arr=[];
-
 snap.forEach(c=>{
-
 let d=c.val();
-
 d.key=c.key;
-
 arr.push(d);
-
 });
 
 arr.reverse();
 
 arr.forEach(d=>{
-
-let items=(d.items || [])
-.map(i=>`
-
+let items=(d.items || []).map(i=>`
 <div class="item-list">
-
 <div class="item-left">
-
 <div class="item-dot"></div>
-
-<div class="item-name">
-${i.barang}
+<div class="item-name">${i.barang}</div>
 </div>
-
+<div class="item-jumlah">${i.jumlah}</div>
 </div>
-
-<div class="item-jumlah">
-${i.jumlah}
-</div>
-
-</div>
-
-`)
-.join("");
+`).join("");
 
 let div=document.createElement("div");
-
 div.className="laporan-card";
 
 div.innerHTML=`
-
 <div class="laporan-header">
-
 <div class="header-left">
-
-<div class="judul">
-${d.jenis} • ${d.tempat}
+<div class="judul">${d.jenis} • ${d.tempat}</div>
+${d.riwayatEdit ? `<div class="edited">EDITED</div>` : ""}
 </div>
 
-${d.riwayatEdit ? `
-<div class="edited">
-EDITED
+<div class="action-wrap">
+<div class="edit-btn" onclick="toggleEdit('${d.key}')">✏️</div>
+<div class="delete-btn" onclick="openDeleteModal('${d.key}')">🗑️</div>
 </div>
-` : ""}
-
-</div>
-
-<div
-class="edit-btn"
-onclick="toggleEdit('${d.key}')">
-
-✏️
-
-</div>
-
 </div>
 
 <div class="laporan-tanggal">
-
 <div class="date-dot"></div>
-
-<div class="date-text">
-${formatTanggal(d.waktu)}
+<div class="date-text">${formatTanggal(d.waktu)}</div>
 </div>
 
-</div>
-
-<div class="laporan-items">
-${items}
-</div>
+<div class="laporan-items">${items}</div>
 
 <div id="edit-${d.key}" style="display:none"></div>
 
-${d.catatan ? `
-<div class="note-box">
-📝 ${d.catatan}
-</div>
-` : ""}
-
-${d.foto ? `
-<img src="${d.foto}">
-` : ""}
-
+${d.catatan ? `<div class="note-box">📝 ${d.catatan}</div>` : ""}
+${d.foto ? `<img src="${d.foto}">` : ""}
 `;
 
 list.appendChild(div);
-
 });
-
 });
-
 }
 
-// LOAD REKAP
 function loadRekap(){
-
 let container=document.getElementById("rekapHarian");
-
 container.innerHTML=`<div class="loading">Loading...</div>`;
 
 db.ref("items").once("value",snapItem=>{
-
 let hargaMap={};
 
 if(snapItem.exists()){
-
 snapItem.forEach(c=>{
-
 let d=c.val();
-
 let nama=(d.nama || "").toLowerCase().trim();
-
 hargaMap[nama]=Number(d.harga || 0);
-
 });
-
 }
 
 db.ref("jajan").once("value",snap=>{
-
 if(!snap.exists()){
-
 container.innerHTML=`<div class="loading">Belum ada data</div>`;
 return;
-
 }
 
 let data=Object.values(snap.val());
-
 let grup={};
 
 data.forEach(d=>{
-
 if(!d.waktu) return;
 
 let dateObj=new Date(d.waktu);
-
 if(isNaN(dateObj)) return;
 
-let key=dateObj.toLocaleDateString("id-ID",{
-year:"numeric",
-month:"2-digit",
-day:"2-digit"
-});
-
+let key=dateObj.toLocaleDateString("id-ID",{year:"numeric",month:"2-digit",day:"2-digit"});
 let label=formatTanggalHari(dateObj);
 
 if(!grup[key]){
-
 grup[key]={
 label:label,
 masukIkhwan:0,
@@ -806,21 +704,15 @@ sisaIkhwan:0,
 sisaAkhwat:0,
 totalUang:0
 };
-
 }
 
 let jenis=(d.jenis || "").toLowerCase();
-
 let tempat=(d.tempat || "").toLowerCase();
 
 (d.items || []).forEach(i=>{
-
 let nama=(i.barang || "").toLowerCase().trim();
-
 let jumlah=Number(i.jumlah || 0);
-
 let harga=hargaMap[nama] || 0;
-
 let subtotal=jumlah * harga;
 
 if(jenis.includes("masuk") && tempat.includes("ikhwan")){
@@ -840,116 +732,58 @@ grup[key].sisaIkhwan += jumlah;
 if(jenis.includes("sisa") && tempat.includes("akhwat")){
 grup[key].sisaAkhwat += jumlah;
 }
-
 });
-
 });
 
 container.innerHTML="";
 
-Object.keys(grup)
-.sort((a,b)=>new Date(b)-new Date(a))
-.forEach(key=>{
-
+Object.keys(grup).sort((a,b)=>new Date(b)-new Date(a)).forEach(key=>{
 let g=grup[key];
 
-let terjual=
-(g.masukIkhwan + g.masukAkhwat)
--
-(g.sisaIkhwan + g.sisaAkhwat);
-
+let terjual=(g.masukIkhwan + g.masukAkhwat) - (g.sisaIkhwan + g.sisaAkhwat);
 if(terjual < 0) terjual=0;
 
 let div=document.createElement("div");
-
 div.className="laporan-card";
 
 div.innerHTML=`
-
 <div class="laporan-header">
-
-<div class="judul">
-📊 Rekap Harian
-</div>
-
+<div class="judul">📊 Rekap Harian</div>
 </div>
 
 <div class="laporan-tanggal">
-
 <div class="date-dot"></div>
-
-<div class="date-text">
-${g.label}
-</div>
-
+<div class="date-text">${g.label}</div>
 </div>
 
 <div class="laporan-items">
-
-<div class="item-list">
-<div class="item-name">Masuk Ikhwan</div>
-<div class="item-jumlah">${g.masukIkhwan}</div>
+<div class="item-list"><div class="item-name">Masuk Ikhwan</div><div class="item-jumlah">${g.masukIkhwan}</div></div>
+<div class="item-list"><div class="item-name">Masuk Akhwat</div><div class="item-jumlah">${g.masukAkhwat}</div></div>
+<div class="item-list"><div class="item-name">Sisa Ikhwan</div><div class="item-jumlah">${g.sisaIkhwan}</div></div>
+<div class="item-list"><div class="item-name">Sisa Akhwat</div><div class="item-jumlah">${g.sisaAkhwat}</div></div>
+<div class="item-list"><div class="item-name">Terjual</div><div class="item-jumlah">${terjual}</div></div>
+<div class="item-list"><div class="item-name">Total</div><div class="item-jumlah">Rp ${g.totalUang.toLocaleString("id-ID")}</div></div>
 </div>
-
-<div class="item-list">
-<div class="item-name">Masuk Akhwat</div>
-<div class="item-jumlah">${g.masukAkhwat}</div>
-</div>
-
-<div class="item-list">
-<div class="item-name">Sisa Ikhwan</div>
-<div class="item-jumlah">${g.sisaIkhwan}</div>
-</div>
-
-<div class="item-list">
-<div class="item-name">Sisa Akhwat</div>
-<div class="item-jumlah">${g.sisaAkhwat}</div>
-</div>
-
-<div class="item-list">
-<div class="item-name">Terjual</div>
-<div class="item-jumlah">${terjual}</div>
-</div>
-
-<div class="item-list">
-<div class="item-name">Total</div>
-<div class="item-jumlah">
-Rp ${g.totalUang.toLocaleString("id-ID")}
-</div>
-</div>
-
-</div>
-
 `;
 
 container.appendChild(div);
-
 });
-
 });
-
 });
-
 }
 
-// TOGGLE EDIT
 function toggleEdit(key){
-
 let box=document.getElementById("edit-"+key);
 
 if(box.style.display==="block"){
-
 box.style.display="none";
 box.innerHTML="";
-
 return;
-
 }
 
+loadMasterItems(()=>{
 db.ref("jajan/"+key).once("value",snap=>{
-
 let d=snap.val();
-
 let dateObj=new Date(d.waktu);
 
 let local=
@@ -959,108 +793,122 @@ String(dateObj.getDate()).padStart(2,"0")+"T"+
 String(dateObj.getHours()).padStart(2,"0")+":"+
 String(dateObj.getMinutes()).padStart(2,"0");
 
-let itemsHTML=(d.items || []).map((i,idx)=>`
-
-<div class="item-row">
-
-<span>${i.barang}</span>
-
-<input
-type="number"
-value="${i.jumlah}"
-id="jml-${key}-${idx}"
-class="small-input"
->
-
-</div>
-
-`).join("");
-
 box.innerHTML=`
-
 <div class="edit-box">
-
-<b>
-✏️ Edit Data
-</b>
-
+<b>✏️ Edit Data</b>
 <br><br>
 
 Tanggal
+<input type="datetime-local" id="tglEdit-${key}" value="${local}" class="input">
 
-<input
-type="datetime-local"
-id="tglEdit-${key}"
-value="${local}"
-class="input"
->
+<div id="editItems-${key}"></div>
 
-${itemsHTML}
+<button onclick="tambahItemEdit('${key}')" class="add-btn">+ Tambah Item</button>
 
-<button
-onclick="simpanEdit('${key}')"
-class="save-btn">
+<button onclick="simpanEdit('${key}')" class="save-btn">💾 Simpan</button>
 
-💾 Simpan
+<button onclick="lihatRiwayat('${key}')" class="history-btn">📜 Riwayat Edit</button>
 
-</button>
-
-<button
-onclick="lihatRiwayat('${key}')"
-class="history-btn">
-
-📜 Riwayat Edit
-
-</button>
-
-<div
-id="history-${key}"
-style="display:none">
-
+<div id="history-${key}" style="display:none"></div>
 </div>
-
-</div>
-
 `;
 
 box.style.display="block";
 
+(d.items || []).forEach(i=>{
+tambahItemEdit(key,i.barang,i.jumlah);
 });
-
+});
+});
 }
 
-// SIMPAN
+function tambahItemEdit(key,barang="",jumlah=0){
+let wrap=document.getElementById("editItems-"+key);
+let idx=Date.now()+Math.floor(Math.random()*9999);
+
+let div=document.createElement("div");
+div.className="item-row";
+div.id="row-"+key+"-"+idx;
+
+div.innerHTML=`
+<div class="item-row-left">
+<select class="select-input barang-edit-${key}" onchange="cekManualItem(this,'${key}','${idx}')">
+${optionItems(barang)}
+</select>
+<input type="text" class="input manual-edit-${key}" id="manual-${key}-${idx}" placeholder="Nama item manual" style="display:none;margin-bottom:0">
+</div>
+
+<input type="number" value="${jumlah}" class="small-input jumlah-edit-${key}">
+
+<button class="remove-row-btn" onclick="hapusBarisEdit('${key}','${idx}')">×</button>
+`;
+
+wrap.appendChild(div);
+
+let select=div.querySelector("select");
+if(barang && !masterItems.some(i=>i.nama===barang)){
+select.value="__manual__";
+let manual=document.getElementById("manual-"+key+"-"+idx);
+manual.style.display="block";
+manual.value=barang;
+}
+}
+
+function cekManualItem(select,key,idx){
+let manual=document.getElementById("manual-"+key+"-"+idx);
+if(select.value==="__manual__"){
+manual.style.display="block";
+manual.focus();
+}else{
+manual.style.display="none";
+manual.value="";
+}
+}
+
+function hapusBarisEdit(key,idx){
+let row=document.getElementById("row-"+key+"-"+idx);
+if(row) row.remove();
+}
+
 function simpanEdit(key){
-
 db.ref("jajan/"+key).once("value",snap=>{
-
 let oldData=snap.val();
 
-let items=oldData.items || [];
-
-let tglInput=
-document.getElementById("tglEdit-"+key).value;
-
+let tglInput=document.getElementById("tglEdit-"+key).value;
 let newDate=new Date(tglInput);
 
 if(isNaN(newDate)){
-
-alert("Tanggal salah!");
+toast("Tanggal salah");
 return;
-
 }
 
-let newItems=items.map((i,idx)=>{
+let selects=document.querySelectorAll(".barang-edit-"+key);
+let jumlahs=document.querySelectorAll(".jumlah-edit-"+key);
+let manuals=document.querySelectorAll(".manual-edit-"+key);
 
-let val=
-document.getElementById(`jml-${key}-${idx}`).value;
+let newItems=[];
 
-return{
-barang:i.barang,
-jumlah:Number(val || 0)
-};
+selects.forEach((s,idx)=>{
+let nama=s.value;
 
+if(nama==="__manual__"){
+nama=(manuals[idx].value || "").trim();
+}
+
+let jumlah=Number(jumlahs[idx].value || 0);
+
+if(nama){
+newItems.push({
+barang:nama,
+jumlah:jumlah
 });
+}
+});
+
+if(newItems.length===0){
+toast("Minimal isi 1 item");
+return;
+}
 
 let newData={
 waktu:newDate.toISOString(),
@@ -1068,101 +916,80 @@ items:newItems
 };
 
 db.ref("jajan/"+key+"/riwayatEdit").push({
-
 waktuEdit:new Date().toISOString(),
-
-sebelum:oldData.items,
-
+sebelum:oldData.items || [],
 sesudah:newItems
-
 });
 
 db.ref("jajan/"+key).update(newData).then(()=>{
-
-alert("Berhasil diupdate");
-
+toast("Berhasil diupdate");
 loadLaporan();
-
 loadRekap();
-
 });
-
 });
-
 }
 
-// RIWAYAT
 function lihatRiwayat(key){
-
 let box=document.getElementById("history-"+key);
 
 if(box.style.display==="block"){
-
 box.style.display="none";
-
 return;
-
 }
 
 db.ref("jajan/"+key+"/riwayatEdit").once("value",snap=>{
-
 if(!snap.exists()){
-
-box.innerHTML=`
-<div class="history-box">
-Belum ada riwayat
-</div>
-`;
-
+box.innerHTML=`<div class="history-box">Belum ada riwayat</div>`;
 box.style.display="block";
-
 return;
-
 }
 
 let html="";
 
 snap.forEach(c=>{
-
 let d=c.val();
 
 html += `
-
 <div class="history-box">
-
-<b>
-${new Date(d.waktuEdit).toLocaleString("id-ID")}
-</b>
-
+<b>${new Date(d.waktuEdit).toLocaleString("id-ID")}</b>
 <br><br>
-
 Sebelum :
-${d.sebelum.map(i=>i.jumlah).join(", ")}
-
+${(d.sebelum || []).map(i=>`${i.barang}: ${i.jumlah}`).join(", ")}
 <br>
-
 Sesudah :
-${d.sesudah.map(i=>i.jumlah).join(", ")}
-
+${(d.sesudah || []).map(i=>`${i.barang}: ${i.jumlah}`).join(", ")}
 </div>
-
 `;
-
 });
 
 box.innerHTML=html;
-
 box.style.display="block";
-
 });
-
 }
 
-// INIT
+function openDeleteModal(key){
+deleteKey=key;
+document.getElementById("deleteModal").style.display="flex";
+}
+
+function closeDeleteModal(){
+deleteKey=null;
+document.getElementById("deleteModal").style.display="none";
+}
+
+function hapusTransaksi(){
+if(!deleteKey) return;
+
+db.ref("jajan/"+deleteKey).remove().then(()=>{
+closeDeleteModal();
+toast("Transaksi berhasil dihapus");
 loadLaporan();
-
 loadRekap();
+});
+}
 
+loadLaporan();
+loadRekap();
 </script>
 
 </body>
