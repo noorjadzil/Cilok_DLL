@@ -728,8 +728,25 @@ totalUang:0
 let jenis=(d.jenis || "").toLowerCase();
 let tempat=(d.tempat || "").toLowerCase();
 
+const itemKhusus=[
+"terang bulan",
+"mie ayam",
+"bakso",
+"es teh",
+"es jeruk",
+"es blewah",
+"es coklat",
+"jus alpukat",
+"es sari kedelai",
+"aneka snack",
+"jajanan 3000"
+];
+
 (d.items || []).forEach(i=>{
 let nama=(i.barang || "").toLowerCase().trim();
+
+if(itemKhusus.includes(nama)) return;
+
 let jumlah=Number(i.jumlah || 0);
 let harga=hargaMap[nama] || 0;
 let subtotal=jumlah * harga;
