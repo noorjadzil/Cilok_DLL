@@ -618,7 +618,26 @@ arr.push(d);
 arr.reverse();
 
 arr.forEach(d=>{
-let items=(d.items || []).map(i=>`
+const itemKhusus=[
+"terang bulan",
+"mie ayam",
+"bakso",
+"es teh",
+"es jeruk",
+"es blewah",
+"es coklat",
+"jus alpukat",
+"es sari kedelai",
+"aneka snack",
+"jajanan 3000"
+];
+
+let items=(d.items || [])
+.filter(i=>{
+const nama=(i.barang||"").toLowerCase().trim();
+return !itemKhusus.includes(nama);
+})
+.map(i=>`
 <div class="item-list">
 <div class="item-left">
 <div class="item-dot"></div>
