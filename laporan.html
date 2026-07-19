@@ -130,7 +130,7 @@ border:1px solid rgba(255,255,255,0.08);
 
 .laporan-card{
 width:calc(100% + 70px);
-margin:-16px -35px 32px;
+margin:-10px -35px 20px;
 padding:16px;
 background:linear-gradient(180deg,#172554,#111827 140px,#0b1220);
 border:1px solid rgba(255,255,255,.06);
@@ -504,10 +504,20 @@ body{padding:8px}
 padding:16px;
 border-radius:22px;
 width:calc(100% + 56px);
-margin:-12px -28px 40px;
+margin:-6px -28px 20px;
 }
 h2{font-size:28px}
 }
+
+#listLaporan > .laporan-card:first-child{
+    margin-top:-18px !important;
+}
+@media(max-width:430px){
+#listLaporan > .laporan-card:first-child{
+    margin-top:-18px !important;
+}
+}
+
 </style>
 </head>
 
