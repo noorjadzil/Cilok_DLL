@@ -988,10 +988,7 @@ jumlah:jumlah
 }
 });
 
-if(newItems.length===0){
-toast("Minimal isi 1 item");
-return;
-}
+// Validasi minimal item dihapus agar edit tetap bisa disimpan meskipun tidak ada item.
 
 let newData={
 waktu:newDate.toISOString(),
