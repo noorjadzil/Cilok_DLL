@@ -59,13 +59,15 @@ margin:auto;
 }
 
 .card{
+position:relative;
+overflow:hidden;
 width:100%;
-background:rgba(255,255,255,0.05);
+background:linear-gradient(180deg,rgba(17,24,39,.96),rgba(10,15,28,.96));
 backdrop-filter:blur(24px);
-border:1px solid rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,.06);
 border-radius:34px;
 padding:18px;
-box-shadow:0 15px 45px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.05);
+box-shadow:0 14px 40px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.05);
 }
 
 h2{
@@ -100,7 +102,7 @@ backdrop-filter:blur(10px);
 .tab-wrap{
 display:flex;
 gap:10px;
-margin-bottom:18px;
+margin-bottom:6px;
 }
 
 .tab-btn{
@@ -126,14 +128,14 @@ border:1px solid rgba(255,255,255,0.08);
 }
 
 .laporan-card{
-width:100%;
-margin-top:14px;
-background:linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.04));
-border:1px solid rgba(255,255,255,0.08);
-border-radius:24px;
+width:calc(100% + 60px);
+margin:-16px -30px 18px;
 padding:16px;
+background:linear-gradient(180deg,#172554,#111827 140px,#0b1220);
+border:1px solid rgba(255,255,255,.06);
+border-radius:30px;
 backdrop-filter:blur(20px);
-box-shadow:0 12px 35px rgba(0,0,0,0.30),inset 0 1px 0 rgba(255,255,255,0.05);
+box-shadow:0 20px 45px rgba(2,6,23,.45), inset 0 1px 0 rgba(255,255,255,.08);
 }
 
 .laporan-header{
@@ -193,7 +195,7 @@ align-items:center;
 gap:10px;
 padding:12px 14px;
 border-radius:18px;
-margin-bottom:14px;
+margin-bottom:0;
 background:linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03));
 border:1px solid rgba(255,255,255,0.08);
 backdrop-filter:blur(12px);
@@ -497,7 +499,7 @@ margin-top:4px;
 @media(max-width:430px){
 body{padding:8px}
 .card{padding:12px;border-radius:24px}
-.laporan-card{padding:14px;border-radius:22px}
+.laporan-card{padding:14px;border-radius:22px;width:calc(100% + 36px);margin:-12px -18px 18px;}
 h2{font-size:28px}
 }
 </style>
